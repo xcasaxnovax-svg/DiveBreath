@@ -19,8 +19,8 @@ $('back').onclick=()=>{let id=document.querySelector('.page.active')?.id;if(id==
 qa('nav button').forEach(b=>b.onclick=()=>page(b.dataset.p));
 qa('.presets button[data-i]').forEach(b=>b.onclick=()=>{resetTraining();IN=+b.dataset.i;OUT=+b.dataset.o;qa('.presets button').forEach(x=>x.classList.toggle('sel',x===b));$('target').textContent=String(DUR).padStart(2,'0')+':00'});
 $('custom').onclick=()=>{$('ci').textContent=IN;$('co').textContent=OUT;$('cd').textContent=DUR;page('customPage')};
-qa('.step button').forEach(b=>b.onclick=()=>{let id=b.dataset.k==='i'?'ci':b.dataset.k==='o'?'co':'cd',v=+$(id).textContent+(+b.dataset.d),min=b.dataset.k==='d'?1:2,max=b.dataset.k==='d'?60:15;$(id).textContent=Math.max(min,Math.min(max,v))});
-$('apply').onclick=()=>{IN=+$('ci').textContent;OUT=+$('co').textContent;DUR=+$('cd').textContent;qa('.presets button').forEach(x=>x.classList.remove('sel'));$('custom').classList.add('sel');$('target').textContent=String(DUR).padStart(2,'0')+':00';page('training');resetTraining()};
+qa('.step button').forEach(b=>b.onclick=()=>{let id=b.dataset.key==='in'?'ci':b.dataset.key==='out'?'co':'cd',v=+$(id).textContent+(+b.dataset.d),min=b.dataset.key==='dur'?1:2,max=b.dataset.key==='dur'?60:15;$(id).textContent=Math.max(min,Math.min(max,v))});
+$('applyCustom').onclick=()=>{IN=+$('ci').textContent;OUT=+$('co').textContent;DUR=+$('cd').textContent;qa('.presets button').forEach(x=>x.classList.remove('sel'));$('custom').classList.add('sel');$('target').textContent=String(DUR).padStart(2,'0')+':00';page('training');resetTraining()};
 
 qa('.durations button').forEach(b=>b.onclick=()=>{qa('.durations button').forEach(x=>x.classList.toggle('sel',x===b));CHECK.duration=+b.dataset.min*60;$('durValue').textContent=b.dataset.min;$('checkCountdown').textContent=fmt(CHECK.duration)});
 $('durMinus').onclick=()=>{let v=Math.max(1,+$('durValue').textContent-1);$('durValue').textContent=v;CHECK.duration=v*60;qa('.durations button').forEach(x=>x.classList.remove('sel'))};

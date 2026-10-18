@@ -1,2 +1,3 @@
-# DiveBreath V14 DIVER CHECK
-Training and lung from V12 unchanged. Atem-Check rebuilt with working start, countdown + stopwatch, diver scene, subtle gaze animation, bubbles on exhale, pause/end and result feedback.
+DiveBreath V15 DIVER CHECK FIXED
+
+Training/Lunge visuell und in der Atemanimation unverändert aus V14/V12. Behoben: fataler JavaScript-ID-Fehler, Atem-Check-Start, Stoppuhr/Restzeit, Pause/Beenden, Atem-Tapping, Blasen beim Ausatmen, Auswertung sowie Individuell-Steuerung. Taucheransicht mit dezenter Blick-/Augenanimation.
