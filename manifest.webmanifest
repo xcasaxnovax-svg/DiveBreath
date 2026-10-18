@@ -1,1 +1,30 @@
-{"name":"DiveBreath","short_name":"DiveBreath","start_url":"./index.html","display":"standalone","background_color":"#031722","theme_color":"#031722","description":"Atemtraining und Gasverbrauch-Auswertung für Sporttaucher"}
+{
+  "name": "DiveBreath – Atemtrainer für Sporttaucher",
+  "short_name": "DiveBreath",
+  "id": "/DiveBreath/",
+  "start_url": "/DiveBreath/",
+  "scope": "/DiveBreath/",
+  "display": "standalone",
+  "background_color": "#031f2b",
+  "theme_color": "#031f2b",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
