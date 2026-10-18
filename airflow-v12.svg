@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 764 512">
+<g fill="none" stroke="currentColor" stroke-linecap="round">
+ <path class="p p1" d="M382 20 L382 188 L270 282 L165 350"/>
+ <path class="p p2" d="M382 188 L494 282 L599 350"/>
+ <path class="p p3" d="M270 282 L220 390"/>
+ <path class="p p4" d="M494 282 L544 390"/>
+</g></svg>

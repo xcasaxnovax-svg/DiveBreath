@@ -1,2 +1,2 @@
-# DiveBreath 1.0 V10 AIRFLOW
-Freestanding SVG lung, breathing airflow/glow, custom breathing times, V10 version on title and header, stopped/reset timers on navigation.
+# DiveBreath 1.0 V12 ANIMATED
+Exact approved title and lung graphics. Lung expands/contracts continuously with phase timing, crossfades blue/orange, and uses a separate airflow overlay. Custom settings and reset-on-navigation retained.
