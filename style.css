@@ -36,3 +36,49 @@
 .diverSceneV16{position:relative;height:380px;margin:0 -14px 6px;overflow:hidden;background:#002536}.diverSceneV16>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;transition:opacity .32s ease,transform 3s ease}.diverSceneV16 #diverIn{opacity:1;transform:scale(1.02)}.diverSceneV16 #diverOut{opacity:0;transform:scale(1.04)}.diverSceneV16.exhaling #diverIn{opacity:0}.diverSceneV16.exhaling #diverOut{opacity:1;transform:scale(1.02)}.diverSceneV16:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 72%,#00131dbb);pointer-events:none}
 .phaseBar{height:14px;border:1px solid #17677b;border-radius:99px;padding:2px;background:#03212c;margin:4px 0 9px}.phaseBar i{height:100%;width:0;display:block;border-radius:99px;background:#23e7f6;transition:width .15s linear}.breathBtn.exhaleBtn{background:linear-gradient(90deg,#ffb321,#ff602a)}.resultActions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .field{display:grid;grid-template-columns:1fr 120px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #164d5d}.field input{background:#001a24;border:1px solid #17657a;color:white;border-radius:9px;padding:10px;width:100%}.rmvPreview{font-size:12px;color:#9fc4cc;line-height:1.4}.diveCard{background:#052532;border:1px solid #146179;border-radius:14px;padding:12px;margin:10px 0}.diveCard b{color:#24e3f5}.diveCard button{float:right;border:0;background:none;color:#ff806b}.progressCards{display:grid;grid-template-columns:1fr 1fr;gap:8px}.progressCards .panel{margin:0;text-align:center}.progressCards b{display:block;font-size:25px;color:#27e4f4;margin-top:5px}.progressCards small{color:#9fc4cc}
+
+/* V17: height-responsive compaction only. Existing layout/functions stay intact. */
+html,body{height:100%;overscroll-behavior:none}
+#app{height:100dvh;overflow:hidden}
+main{height:calc(100dvh - 174px);overflow:hidden}
+.page.active{height:100%;overflow:hidden}
+@media (max-height:850px){
+ .page{padding-top:10px!important;padding-bottom:8px!important}
+ .page h2{margin:4px 0 8px!important;font-size:27px!important}
+ .presets{margin-bottom:5px!important}
+ .lungStage{max-height:300px!important}
+ .lungAnim{max-height:270px!important;margin:auto!important}
+ .circle{width:142px!important;height:142px!important;margin:2px auto!important}
+ .phase{margin:1px 0!important}
+ .stats{margin:5px 0!important}
+ .controls{margin-top:5px!important}
+ .checkLead{margin:4px 0 7px!important}
+ .durations{margin:6px 0!important}
+ .customDuration{padding:6px 10px!important}
+ .setupDiver{height:235px!important;margin-top:4px!important}
+ #checkSetup .cta{padding:14px!important}
+ .checkHint{padding:7px 10px!important}
+ .countScene{height:315px!important}
+ .countCircle{width:165px!important;height:165px!important}
+ .countCircle b{font-size:60px!important}
+ .diverSceneV16{height:250px!important}
+ .miniStats{margin-bottom:4px!important}
+ .breathBtn{padding:11px!important}
+ .timerHud{margin:4px 0!important}
+ .checkControls{gap:7px!important}
+ .checkControls button{padding:9px!important}
+ .resultBadge{width:42px!important;height:42px!important;font-size:25px!important;margin:2px auto!important}
+ #checkResult h2{font-size:23px!important;margin:2px 0!important}
+ #resultPraise{font-size:12px!important;margin:3px 0!important}
+ .resultGrid span{padding:7px!important}
+ .resultGrid b{font-size:15px!important}
+ #checkResult .panel{margin:5px 0!important;padding:7px!important}
+ #checkChart{max-height:105px!important}
+ .feedback{padding:8px!important;margin:5px 0!important;font-size:11px!important}
+ .field{padding:4px 0!important}
+ .field input{padding:7px!important}
+ .logForm{margin:3px 0!important;padding:8px!important}
+ .diveCard{padding:7px!important;margin:5px 0!important;font-size:11px!important}
+ .progressCards{gap:5px!important}
+ .progressCards .panel{padding:8px!important}
+}

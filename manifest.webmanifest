@@ -1,22 +1,29 @@
 {
-  "name": "DiveBreath 1.0 V11",
+  "name": "DiveBreath",
   "short_name": "DiveBreath",
-  "id": "/DiveBreath/",
-  "start_url": "/DiveBreath/",
-  "scope": "/DiveBreath/",
+  "description": "Atemtraining und Atem-Check für Sporttaucher.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#00131d",
-  "theme_color": "#00131d",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#001923",
+  "theme_color": "#001923",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
