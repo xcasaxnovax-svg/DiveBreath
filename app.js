@@ -75,3 +75,44 @@ function bindTrainingControls(){
   updateTrainingSelection();
 }
 document.addEventListener('DOMContentLoaded',bindTrainingControls);
+
+let selectedSimKey='calm',simRunning=false;
+function bindRC5(){
+ const enter=document.getElementById('enterAppBtn');
+ if(enter) enter.onclick=()=>show('training');
+
+ document.querySelectorAll('.simChoose').forEach(btn=>{
+   btn.onclick=()=>{
+     selectedSimKey=btn.dataset.sim;
+     document.querySelectorAll('.simChoose').forEach(x=>{
+       const on=x===btn;x.classList.toggle('selectedProgram',on);
+       const m=x.querySelector(':scope > span');if(m)m.textContent=on?'✓':'○';
+     });
+     const [t,d]=scenarios[selectedSimKey];
+     document.getElementById('sceneTitle').textContent=t;
+     document.getElementById('sceneText').textContent=d;
+     document.getElementById('simGuide').innerHTML=`<b>${t}</b><p>${d}</p>`;
+     resetSimClock();
+   };
+ });
+ const start=document.getElementById('simStartBtn');
+ if(start) start.onclick=()=>{
+   if(!simRunning){
+     simRunning=true;start.textContent='Ⅱ PAUSE';
+     clearInterval(simTimer);
+     simTimer=setInterval(()=>{simSec++;document.getElementById('simTime').textContent=fmtMs(simSec*1000);},1000);
+     document.getElementById('simGuide').innerHTML=`<b>Simulation läuft</b><p>${scenarios[selectedSimKey][1]}</p>`;
+   } else {
+     simRunning=false;start.textContent='▶ WEITER';
+     clearInterval(simTimer);
+   }
+ };
+ const reset=document.getElementById('simResetBtn');
+ if(reset) reset.onclick=resetSimClock;
+}
+function resetSimClock(){
+ clearInterval(simTimer);simRunning=false;simSec=0;
+ const t=document.getElementById('simTime');if(t)t.textContent='00:00';
+ const b=document.getElementById('simStartBtn');if(b)b.textContent='▶ SIMULATION STARTEN';
+}
+document.addEventListener('DOMContentLoaded',bindRC5);

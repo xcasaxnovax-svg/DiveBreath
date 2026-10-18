@@ -42,3 +42,7 @@ button.program.choose.selectedProgram>span{color:#35def5}
 .startDock{margin-top:16px;padding:14px;border-radius:22px;background:#031d29;border:1px solid #0d5369}
 .chips button{cursor:pointer;touch-action:manipulation;min-height:48px;font-size:15px}
 #startTrainingBtn{touch-action:manipulation;min-height:64px}
+
+.titleArtwork.immersive{position:relative;margin-bottom:16px}.titleArtwork.immersive img{min-height:68vh;object-fit:cover;object-position:center top}
+.heroStart{position:absolute;left:16px;right:16px;bottom:18px;z-index:2}.heroStart .btn{box-shadow:0 0 35px #18d6f477}
+.simChoose{width:100%;color:var(--text);font:inherit;text-align:left}.simChoose.selectedProgram{border-color:#35def5;background:linear-gradient(145deg,#073b4d,#063140)}.simChoose>span{font-size:24px;color:#35def5}.simControls{display:grid;grid-template-columns:2fr 1fr;gap:9px;margin:14px 0}

@@ -1,2 +1,2 @@
-# DiveBreath 1.0 RC4 FIXED
-Fixes: full title artwork shown, duration buttons work without custom input, program selection is explicit, and training starts from a dedicated start button.
+# DiveBreath 1.0 RC5 IMMERSION
+Start screen reduced to cinematic artwork + working entry button + safety notice. Simulation has selectable scenarios, start/pause/resume/reset timer. Training selection retained from RC4.
