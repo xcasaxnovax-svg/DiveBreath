@@ -1,12 +1,20 @@
 const $=x=>document.getElementById(x),qa=s=>document.querySelectorAll(s);let IN=4,OUT=5,DUR=10,T={run:false,pause:false,start:0,ps:0,ph:0,cy:0,pauseAt:0},raf=0,C={run:false,start:0,last:0,ph:'in',i:[],o:[],timer:0};
 const fmt=s=>{s=Math.max(0,Math.floor(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
 function buttons(){$('start').disabled=T.run&&!T.pause;$('pause').disabled=!T.run;$('stop').disabled=!T.run}
-function resetTraining(){cancelAnimationFrame(raf);T={run:false,pause:false,start:0,ps:0,ph:0,cy:0,pauseAt:0};$('phase').textContent='BEREIT';$('phaseTime').textContent='0.0';$('elapsed').textContent='00:00';$('cycles').textContent='0';$('bar').style.width='0%';$('lung').style.transform='scale(.88)';$('training').classList.remove('inhale','exhale');buttons()}
-function startTraining(){if(T.run&&T.pause){let d=performance.now()-T.pauseAt;T.start+=d;T.ps+=d;T.pause=false;buttons();raf=requestAnimationFrame(tick);return}if(T.run)return;let n=performance.now();T={run:true,pause:false,start:n,ps:n,ph:0,cy:0,pauseAt:0};buttons();raf=requestAnimationFrame(tick)}
+function resetTraining(){clearInterval(TRAINCOUNT_TIMER);TRAINCOUNT_TIMER=0;TRAINCOUNT=0;if($('trainingCountdown'))$('trainingCountdown').classList.add('hidden');cancelAnimationFrame(raf);T={run:false,pause:false,start:0,ps:0,ph:0,cy:0,pauseAt:0};$('phase').textContent='BEREIT';$('phaseTime').textContent='0.0';$('elapsed').textContent='00:00';$('cycles').textContent='0';$('bar').style.width='0%';$('lung').style.transform='scale(.88)';$('training').classList.remove('inhale','exhale');buttons()}
+function startTrainingNow(){if(T.run&&T.pause){let d=performance.now()-T.pauseAt;T.start+=d;T.ps+=d;T.pause=false;buttons();raf=requestAnimationFrame(tick);return}if(T.run)return;let n=performance.now();T={run:true,pause:false,start:n,ps:n,ph:0,cy:0,pauseAt:0};buttons();raf=requestAnimationFrame(tick)}
 function tick(n){if(!T.run||T.pause)return;let e=(n-T.start)/1000,d=T.ph?OUT:IN,p=(n-T.ps)/1000;if(e>=DUR*60){stopTraining();return}if(p>=d){T.ph=1-T.ph;if(!T.ph)T.cy++;T.ps=n;d=T.ph?OUT:IN;p=0}let f=Math.min(1,p/d);$('training').classList.toggle('inhale',!T.ph);$('training').classList.toggle('exhale',!!T.ph);$('phase').textContent=T.ph?'AUSATMEN':'EINATMEN';$('phaseTime').textContent=p.toFixed(1);$('elapsed').textContent=fmt(e);$('cycles').textContent=T.cy;$('bar').style.width=((T.ph?1-f:f)*100)+'%';$('bar').style.background=T.ph?'#ff7058':'#2ce4f5';let s=T.ph?1.06-f*.18:.88+f*.18;$('lung').style.transform=`scale(${s})`;let hue=T.ph?`drop-shadow(0 0 ${8+18*(1-f)}px #ff654d)`:`drop-shadow(0 0 ${8+22*f}px #18e4ff)`;$('lung').style.filter=hue;raf=requestAnimationFrame(tick)}
-$('start').onclick=startTraining;$('pause').onclick=()=>{if(!T.run)return;if(!T.pause){T.pause=true;T.pauseAt=performance.now();cancelAnimationFrame(raf)}else startTraining();buttons()};$('stop').onclick=()=>{T.run=false;T.pause=false;cancelAnimationFrame(raf);buttons()};$('reset').onclick=resetTraining;buttons();
+$('start').onclick=()=>{
+ if(T.run&&T.pause){startTrainingNow();return}
+ if(T.run||TRAINCOUNT)return;
+ TRAINCOUNT=3;$('trainingCountBig').textContent='3';$('trainingCountdown').classList.remove('hidden');
+ const pulse=()=>{let c=document.querySelector('.trainingCountCircle');c.classList.remove('pulse');void c.offsetWidth;c.classList.add('pulse');if(navigator.vibrate)navigator.vibrate(40)};
+ pulse();
+ TRAINCOUNT_TIMER=setInterval(()=>{TRAINCOUNT--;if(TRAINCOUNT>0){$('trainingCountBig').textContent=TRAINCOUNT;pulse()}else{clearInterval(TRAINCOUNT_TIMER);TRAINCOUNT_TIMER=0;TRAINCOUNT=0;$('trainingCountdown').classList.add('hidden');startTrainingNow()}},1000)
+};$('pause').onclick=()=>{if(!T.run)return;if(!T.pause){T.pause=true;T.pauseAt=performance.now();cancelAnimationFrame(raf)}else startTrainingNow();buttons()};$('stop').onclick=()=>{T.run=false;T.pause=false;cancelAnimationFrame(raf);buttons()};$('reset').onclick=resetTraining;buttons();
 
 
+let TRAINCOUNT=0,TRAINCOUNT_TIMER=0;
 let CHECK={duration:60,state:'setup',run:false,paused:false,start:0,pauseAt:0,totalPause:0,last:0,phase:'in',ins:[],outs:[],timer:0,countTimer:0};
 const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
 const store=(k,v)=>localStorage.setItem(k,JSON.stringify(v)), load=(k,d=[])=>{try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}};
@@ -35,8 +43,8 @@ function startCountdown(){
 }
 function setCount(n){$('countTop').textContent=n;$('countBig').textContent=n;$('countHint').textContent=n;let c=document.querySelector('.countCircle');c.classList.remove('pulse');void c.offsetWidth;c.classList.add('pulse');if(navigator.vibrate)navigator.vibrate(40)}
 function beginCheck(){
- CHECK.state='run';CHECK.run=true;CHECK.paused=false;CHECK.start=performance.now();CHECK.last=0;CHECK.totalPause=0;CHECK.phase='in';CHECK.ins=[];CHECK.outs=[];
- $('checkCountdownScreen').classList.add('hidden');$('checkRun').classList.remove('hidden');$('tapText').textContent='EINATMEN';$('checkPhase').textContent='Einatmen';$('checkPhase').style.color='#25e5f6';$('diverScene').classList.remove('exhaling');$('tap').className='breathBtn inhaleBtn';$('phaseBarFill').style.width='0%';CHECK.timer=setInterval(updateCheck,100)
+ CHECK.state='run';CHECK.run=true;CHECK.paused=false;CHECK.start=performance.now();CHECK.last=CHECK.start;CHECK.totalPause=0;CHECK.phase='in';CHECK.ins=[];CHECK.outs=[];
+ $('checkCountdownScreen').classList.add('hidden');$('checkRun').classList.remove('hidden');$('tapText').textContent='AUSATMEN';$('phaseHelp').textContent='Drücken, sobald du mit dem Ausatmen beginnst';$('checkPhase').textContent='Einatmen';$('checkPhase').style.color='#25e5f6';$('diverScene').classList.remove('exhaling');$('tap').className='breathBtn inhaleBtn';$('phaseBarFill').style.width='0%';CHECK.timer=setInterval(updateCheck,100)
 }
 function activeElapsed(){return CHECK.run?(performance.now()-CHECK.start-CHECK.totalPause)/1000:0}
 function updateCheck(){if(!CHECK.run||CHECK.paused)return;let e=activeElapsed();$('checkElapsed').textContent=fmt(e);$('stopwatch').textContent=fmt(e)+'.'+Math.floor((e%1)*10);$('checkCountdown').textContent=fmt(Math.max(0,CHECK.duration-e));let phaseElapsed=CHECK.last?(performance.now()-CHECK.last)/1000:0;$('phaseBarFill').style.width=Math.min(100,(phaseElapsed/8)*100)+'%';if(e>=CHECK.duration)finishCheck()}
@@ -52,6 +60,7 @@ $('tap').onclick=()=>{
 function setNext(next){
  let ex=next==='in'; // current measured phase after tap is exhale when next requested action is inhale
  $('tapText').textContent=next==='in'?'EINATMEN':'AUSATMEN';
+ $('phaseHelp').textContent=next==='in'?'Drücken, sobald du mit dem Einatmen beginnst':'Drücken, sobald du mit dem Ausatmen beginnst';
  $('checkPhase').textContent=CHECK.phase==='out'?'Ausatmen':'Einatmen';
  $('checkPhase').style.color=CHECK.phase==='out'?'#ffae26':'#25e5f6';
  $('tap').className='breathBtn '+(next==='in'?'inhaleBtn':'exhaleBtn');

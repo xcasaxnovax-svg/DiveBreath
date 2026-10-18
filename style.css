@@ -112,3 +112,10 @@ main{height:calc(100dvh - 144px);overflow:hidden}
   .checkLead{font-size:11px}
   .feedback{font-size:9px}
 }
+
+/* Training countdown overlay — no layout change */
+.trainingCountdown{position:fixed;inset:56px 0 62px;z-index:50;background:#00131de8;display:grid;place-items:center;backdrop-filter:blur(3px)}
+.trainingCountdown.hidden{display:none!important}
+.trainingCountCircle{width:210px;height:210px;border-radius:50%;border:7px solid #20e5f5;background:#002333ee;box-shadow:0 0 30px #1ce7f588;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.trainingCountCircle small{font-size:18px;font-weight:700}.trainingCountCircle b{font-size:82px;line-height:1}.trainingCountCircle em{font-style:normal;font-size:14px;margin-top:7px}
+.trainingCountCircle.pulse{animation:trainCountPulse .55s ease}@keyframes trainCountPulse{50%{transform:scale(1.08);box-shadow:0 0 48px #1ce7f5}}
