@@ -1,13 +1,13 @@
 <!doctype html><html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#02141e"><link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=rc5"><title>DiveBreath</title></head>
-<body><div class="app"><header class="top"><div class="brand">◢ Dive<span>Breath</span></div><div class="badge">1.0 RC5</div></header><main>
+<link rel="icon" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=rc6"><title>DiveBreath</title></head>
+<body><div class="app"><header class="top"><div class="brand">◢ Dive<span>Breath</span></div><div class="badge">1.0 RC6</div></header><main>
 
 <section id="home" class="view active">
-<div class="titleArtwork immersive">
-  <img src="./hero.png?v=rc5" alt="DiveBreath – Ruhiger atmen, bewusster tauchen">
-  <div class="heroStart"><button id="enterAppBtn" type="button" class="btn mega">LOS GEHT’S →<small>IN DIVEBREATH EINTAUCHEN</small></button></div>
+<div class="heroCrop">
+  <img src="./hero.png?v=rc6" alt="DiveBreath">
+  <button id="enterAppBtn" type="button" class="heroHit" aria-label="Los geht's"></button>
 </div>
 <div class="card safety"><b>⚠️ Sicherheit</b><p>Übungen nur an Land durchführen. Beim Gerätetauchen niemals die Luft anhalten. DiveBreath ersetzt keine Tauchausbildung, Tauchplanung oder einen Tauchcomputer.</p></div>
 </section>
@@ -33,12 +33,13 @@
 <button id="startTrainingBtn" type="button" class="btn mega">TRAINING STARTEN →<small>5 MINUTEN · RUHIGER GRUNDRHYTHMUS</small></button></div>
 <p class="muted fine">Nur an Land trainieren. Beim Gerätetauchen niemals die Luft anhalten.</p>
 </section>
-<section id="coach" class="view"><div class="coachTop"><div><div class="eyebrow">LIVE COACH</div><h2 id="coachTitle">Ruhiger Grundrhythmus</h2></div><div id="totalTime" class="timer">05:00</div></div>
+<section id="coach" class="view"><div class="coachTop"><div><div class="eyebrow">LIVE COACH</div><h2 id="coachTitle">Ruhiger Grundrhythmus</h2></div><div><small class="muted">Trainingszeit</small><div id="totalTime" class="timer">00:00</div></div></div>
 <div class="lungStage">
-<svg id="lungs" viewBox="0 0 300 260" aria-label="Animierte Lunge">
-<path class="trachea" d="M150 25v75M150 75l-32 30M150 75l32 30"/>
-<path class="lung left" d="M137 91C105 80 68 104 51 144c-18 43-8 83 18 91 27 8 61-15 72-51 9-31 3-65-4-93z"/>
-<path class="lung right" d="M163 91c32-11 69 13 86 53 18 43 8 83-18 91-27 8-61-15-72-51-9-31-3-65 4-93z"/>
+<svg id="lungs" viewBox="0 0 360 320" aria-label="Animierte Lunge">
+<defs><radialGradient id="lungGlow"><stop offset="0" stop-color="#64efff"/><stop offset=".55" stop-color="#13bcd6"/><stop offset="1" stop-color="#08758f"/></radialGradient></defs>
+<path class="trachea" d="M180 25 C180 55 180 76 180 101 M180 92 C165 105 151 116 140 132 M180 92 C195 105 209 116 220 132"/>
+<g class="lungGroup leftG"><path class="lung left" d="M159 104 C132 93 101 101 82 126 C57 159 48 210 61 250 C70 278 92 292 116 284 C142 275 158 246 163 211 C168 175 165 132 159 104 Z"/><path class="bronchi" d="M145 126 C124 145 108 169 98 201 M128 151 L111 145 M116 174 L94 168 M106 198 L87 207"/></g>
+<g class="lungGroup rightG"><path class="lung right" d="M201 104 C228 93 259 101 278 126 C303 159 312 210 299 250 C290 278 268 292 244 284 C218 275 202 246 197 211 C192 175 195 132 201 104 Z"/><path class="bronchi" d="M215 126 C236 145 252 169 262 201 M232 151 L249 145 M244 174 L266 168 M254 198 L273 207"/></g>
 </svg>
 <div id="phaseName" class="phaseName">Einatmen</div><div id="phaseCount" class="phaseCount">4.0</div><div class="phaseUnit">Sekunden</div></div>
 <div class="progressTrack"><div id="phaseBar"></div></div>
@@ -51,16 +52,28 @@
 <div class="card"><b>Wie ruhig fühlst du dich jetzt?</b><div class="rating"><button onclick="rate(1)">1</button><button onclick="rate(2)">2</button><button onclick="rate(3)">3</button><button onclick="rate(4)">4</button><button onclick="rate(5)">5</button></div><small class="muted">1 = unruhig · 5 = sehr ruhig</small></div>
 <button class="btn" onclick="show('training')">WEITERES TRAINING</button></section>
 
-<section id="simulation" class="view"><div class="sectionTitle">Mentale Tauchsimulation</div>
-<div class="scenario"><div class="eyebrow">MENTALES SZENARIO · NUR AN LAND</div><div class="depth">15 m</div><div id="simTime" class="timer">00:00</div><span class="bubble b1"></span><span class="bubble b2"></span><h2 id="sceneTitle">Ruhiges Schweben</h2><p id="sceneText">Stelle dir neutrale Tarierung und eine entspannte, kontinuierliche Atmung vor.</p></div>
+<section id="simulation" class="view"><div class="sectionTitle">Tauchsimulation</div>
+<div id="simSetup">
+<div class="card"><div class="eyebrow">SIMULIERTER TRAININGSTAUCHGANG</div><h2>Ausgangsdaten</h2>
+<div class="row"><div><label>Flasche</label><select id="simTank"><option value="12">12 Liter</option><option value="15">15 Liter</option><option value="18">18 Liter</option></select></div><div><label>Startdruck</label><input id="simPressure" type="number" value="200"></div></div>
+<div class="row"><div><label>Zieltiefe</label><select id="simDepth"><option value="10">10 m</option><option value="15" selected>15 m</option><option value="20">20 m</option><option value="25">25 m</option></select></div><div><label>Basis-RMV</label><input id="simRMV" type="number" value="18" step="1"></div></div></div>
+<div class="sectionTitle">Szenario</div>
 <div id="simPrograms">
-<button type="button" class="program simChoose selectedProgram" data-sim="calm"><div class="ico">🤿</div><div class="grow"><b>Ruhiges Schweben</b><small>Entspannung & Tarierung</small></div><span>✓</span></button>
-<button type="button" class="program simChoose" data-sim="current"><div class="ico">🌊</div><div class="grow"><b>Leichte Strömung</b><small>Belastung erkennen, Tempo reduzieren</small></div><span>○</span></button>
-<button type="button" class="program simChoose" data-sim="mask"><div class="ico">🥽</div><div class="grow"><b>Maske läuft voll</b><small>Ruhig bleiben und kontinuierlich atmen</small></div><span>○</span></button>
-<button type="button" class="program simChoose" data-sim="recovery"><div class="ico">💙</div><div class="grow"><b>Nach Belastung</b><small>Stabilisieren und normale Atmung finden</small></div><span>○</span></button>
+<button type="button" class="program simChoose selectedProgram" data-sim="calm"><div class="ico">🤿</div><div class="grow"><b>Ruhiger Tauchgang</b><small>Referenz · entspannte Atmung</small></div><span>✓</span></button>
+<button type="button" class="program simChoose" data-sim="current"><div class="ico">🌊</div><div class="grow"><b>Strömung</b><small>Belastung und erhöhter Gasverbrauch</small></div><span>○</span></button>
+<button type="button" class="program simChoose" data-sim="mask"><div class="ico">🥽</div><div class="grow"><b>Maske voll</b><small>Stressereignis ruhig abarbeiten</small></div><span>○</span></button>
+<button type="button" class="program simChoose" data-sim="recovery"><div class="ico">💙</div><div class="grow"><b>Hohe Atemarbeit</b><small>Belastung erkennen und reduzieren</small></div><span>○</span></button></div>
+<button id="simLaunch" type="button" class="btn mega">SIMULATION STARTEN →</button></div>
+
+<div id="simLive" class="hidden">
+<div class="simOcean"><div class="simHud"><span><small>ZEIT</small><b id="simTime">00:00</b></span><span><small>TIEFE</small><b id="simLiveDepth">0.0 m</b></span><span><small>DRUCK</small><b id="simLivePressure">200 bar</b></span></div><div class="diver">🤿</div><span class="bubble b1"></span><span class="bubble b2"></span></div>
+<div class="card eventCard"><div class="eyebrow">LIVE-SZENARIO</div><h2 id="sceneTitle">Abstieg</h2><p id="sceneText">Ruhig und kontinuierlich atmen.</p><div class="stressLine"><span>Belastung</span><div><i id="stressBar"></i></div><b id="stressText">niedrig</b></div></div>
+<div class="grid"><div class="card">Simulierter RMV<div id="simLiveRMV" class="value">18</div><small>l/min</small></div><div class="card">Gas verbraucht<div id="simGasUsed" class="value">0</div><small>Liter</small></div></div>
+<div class="simControls"><button id="simCalmBtn" class="btn">ATEM KONTROLLIEREN</button><button id="simStopBtn" class="btn secondary">BEENDEN</button></div>
+<p class="muted fine">Alle Werte sind eine Trainingssimulation und keine Tauchplanung. Für reale Tauchgänge gelten Ausbildung, Gasplanung und Tauchcomputer.</p>
 </div>
-<div class="simControls"><button id="simStartBtn" type="button" class="btn">▶ SIMULATION STARTEN</button><button id="simResetBtn" type="button" class="btn secondary">↺ RESET</button></div>
-<div id="simGuide" class="card cue"><b>Bereit</b><p>Wähle ein Szenario und starte die mentale Simulation.</p></div>
+
+<div id="simResult" class="hidden"><div class="hero compact"><div class="eyebrow">SIMULATION BEENDET</div><h1 id="simResultTitle">Auswertung</h1></div><div class="grid"><div class="card">Enddruck<div id="simEndPressure" class="value">–</div><small>bar</small></div><div class="card">Ø sim. RMV<div id="simAvgRMV" class="value">–</div><small>l/min</small></div></div><div class="card"><b id="simResultText">–</b></div><button id="simAgain" class="btn">NEUE SIMULATION</button></div>
 </section>
 <section id="log" class="view"><div class="sectionTitle">Tauchlogbuch</div><div id="logList"></div><button class="btn" onclick="show('newDive')">＋ TAUCHGANG EINTRAGEN</button></section>
 <section id="newDive" class="view"><div class="sectionTitle">Tauchgang eintragen</div><div class="card"><label>Datum</label><input id="date" type="date">
@@ -78,4 +91,4 @@
 <button class="btn secondary" onclick="exportData()">Backup exportieren</button><button class="btn secondary" onclick="clearData()">Lokale Daten löschen</button></section>
 </main></div>
 <nav><div class="navin"><button class="on" data-v="home" onclick="show('home')"><i>⌂</i>Start</button><button data-v="training" onclick="show('training')"><i>🫁</i>Training</button><button data-v="simulation" onclick="show('simulation')"><i>◉</i>Simulation</button><button data-v="log" onclick="show('log')"><i>🤿</i>Logbuch</button><button data-v="progress" onclick="show('progress')"><i>▥</i>Fortschritt</button></div></nav>
-<script src="./app.js?v=rc5"></script></body></html>
+<script src="./app.js?v=rc6"></script></body></html>

@@ -1,118 +1,40 @@
 const $=id=>document.getElementById(id);
 const store={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};
-let selectedDuration=5, training=null, raf=null, paused=false, pauseAt=0, simTimer=null, simSec=0;
+let selectedDuration=5,selectedProgramKey='calm',training=null,raf=0,paused=false,pauseAt=0;
 const programs={
- calm:{name:'Ruhiger Grundrhythmus',phases:[[4,5]],cue:['Ruhig und entspannt einatmen.','Entspannt ausatmen – nicht pressen.'],extra:'Schultern und Kiefer locker lassen.'},
- recovery:{name:'Nach Belastung beruhigen',phases:[[3,4],[4,5],[4,6]],cue:['Sanft einatmen.','Ausatmung ruhig verlängern.'],extra:'Tempo mental reduzieren und Körper entspannen.'},
+ calm:{name:'Ruhiger Grundrhythmus',phases:[[4,5]],cue:['Ruhig und entspannt einatmen.','Entspannt ausatmen – nicht pressen.'],extra:'Schultern und Kiefer locker.'},
+ recovery:{name:'Nach Belastung beruhigen',phases:[[3,4],[4,5],[4,6]],cue:['Sanft einatmen.','Ausatmung ruhig verlängern.'],extra:'Tempo reduzieren und entspannen.'},
  control:{name:'Atemkontrolle',phases:[[4,6]],cue:['Gleichmäßig einatmen.','Langsam und kontrolliert ausatmen.'],extra:'Nicht maximal füllen und nicht leerpressen.'},
- buoyancy:{name:'Tarierung & Atmung',phases:[[4,5]],cue:['Ruhig einatmen.','Ruhig ausatmen.'],extra:'Stelle dir vor, wie sich dein Auftrieb mit dem Atemvolumen sanft verändert.'},
+ buoyancy:{name:'Tarierung & Atmung',phases:[[4,5]],cue:['Ruhig einatmen.','Ruhig ausatmen.'],extra:'Stelle dir die sanfte Auftriebsänderung durch dein Atemvolumen vor.'},
  predive:{name:'Vor dem Tauchgang',phases:[[4,6]],cue:['Locker einatmen.','Entspannt ausatmen.'],extra:'Fokus auf ruhige Bewegungen und einen entspannten Einstieg.'}
 };
 function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===id));if(id==='home')dash();if(id==='progress')progress();if(id==='log')renderLog();scrollTo(0,0)}
-function pickDuration(n,b){selectedDuration=n;document.querySelectorAll('#durationChips button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');$('customDuration').value=''}
-function customDur(){let n=Math.max(1,Math.min(30,+$('customDuration').value||5));selectedDuration=n;document.querySelectorAll('#durationChips button').forEach(x=>x.classList.remove('sel'))}
-function selectProgram(key){startTraining(key)}
-function startTraining(key){let p=programs[key];training={key,p,start:performance.now(),duration:selectedDuration*60000,cycles:0,phase:0,phaseStart:performance.now(),phaseMs:p.phases[0][0]*1000,elapsedBeforePause:0};paused=false;$('coachTitle').textContent=p.name;$('pauseBtn').textContent='Ⅱ PAUSE';show('coach');cancelAnimationFrame(raf);tick()}
-function currentPair(){let p=training.p,progress=(performance.now()-training.start)/training.duration,idx=p.phases.length===1?0:Math.min(p.phases.length-1,Math.floor(progress*p.phases.length));return p.phases[idx]}
-function tick(now=performance.now()){if(!training||paused)return;let elapsed=now-training.start,remain=Math.max(0,training.duration-elapsed);$('totalTime').textContent=fmtMs(remain);let pair=currentPair(),secs=training.phase===0?pair[0]:pair[1],phaseMs=secs*1000,pe=now-training.phaseStart;if(pe>=phaseMs){training.phase=1-training.phase;if(training.phase===0)training.cycles++;training.phaseStart=now;pair=currentPair();secs=training.phase===0?pair[0]:pair[1];phaseMs=secs*1000;pe=0;if(store.get('vibrate',true)&&navigator.vibrate)navigator.vibrate(55)}
-let left=Math.max(0,(phaseMs-pe)/1000);$('phaseName').textContent=training.phase===0?'Einatmen':'Ausatmen';$('phaseCount').textContent=left.toFixed(1);$('phaseBar').style.width=(left/secs*100)+'%';$('lungs').setAttribute('class',training.phase===0?'lungsIn':'lungsOut');$('coachCue').textContent=training.p.cue[training.phase];$('coachExtra').textContent=training.p.extra;if(remain<=0){finishTraining();return}raf=requestAnimationFrame(tick)}
-function togglePause(){if(!training)return;if(!paused){paused=true;pauseAt=performance.now();cancelAnimationFrame(raf);$('pauseBtn').textContent='▶ WEITER'}else{let delta=performance.now()-pauseAt;training.start+=delta;training.phaseStart+=delta;paused=false;$('pauseBtn').textContent='Ⅱ PAUSE';tick()}}
-function stopTraining(){if(!training)return;let elapsed=Math.min(training.duration,performance.now()-training.start);finishTraining(elapsed)}
-function finishTraining(forced){cancelAnimationFrame(raf);let elapsed=forced??training.duration;let sessions=store.get('sessions',[]);sessions.push({date:new Date().toISOString(),seconds:Math.round(elapsed/1000),cycles:training.cycles,program:training.key,rating:null});store.set('sessions',sessions);$('sumTitle').textContent=programs[training.key].name;$('sumCycles').textContent=training.cycles;$('sumTime').textContent=fmtMs(elapsed);training=null;show('summary')}
-function rate(n){let s=store.get('sessions',[]);if(s.length){s[s.length-1].rating=n;store.set('sessions',s)}document.querySelectorAll('.rating button').forEach((b,i)=>b.classList.toggle('sel',i<n))}
-function fmtMs(ms){let sec=Math.max(0,Math.ceil(ms/1000));return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')}
-function saveDive(){let tank=+$('tank').value,start=+$('startp').value,end=+$('endp').value,min=+$('minutes').value,depth=+$('depth').value,temp=+$('temp').value;if(!tank||start<=end||!min||depth<0){$('calc').innerHTML='<span class="warn">Bitte Eingaben prüfen.</span>';return}let used=tank*(start-end),ata=1+depth/10,rmv=used/min/ata;let a=store.get('dives',[]);a.push({id:Date.now(),date:$('date').value||new Date().toISOString().slice(0,10),tank,start,end,min,depth,temp,rmv:+rmv.toFixed(1)});store.set('dives',a);$('calc').innerHTML=`<b class="good">RMV ${rmv.toFixed(1)} l/min</b><br><span class="muted">${used.toFixed(0)} Liter Flaschengas · ${ata.toFixed(2)} ATA</span>`;dash()}
+function fmt(sec){sec=Math.max(0,Math.floor(sec));return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')}
+function updateChoice(){let p=programs[selectedProgramKey];$('durationStatus').innerHTML=`Ausgewählt: <b>${selectedDuration} ${selectedDuration===1?'Minute':'Minuten'}</b>`;$('programStatus').innerHTML=`Programm: <b>${p.name}</b>`;$('startTrainingBtn').querySelector('small').textContent=`${selectedDuration} MIN · ${p.name.toUpperCase()}`}
+function bindTraining(){document.querySelectorAll('#durationChips button').forEach(b=>b.onclick=()=>{selectedDuration=+b.dataset.min;document.querySelectorAll('#durationChips button').forEach(x=>x.classList.toggle('sel',x===b));$('customDuration').value='';updateChoice()});$('customDuration').oninput=()=>{if($('customDuration').value){selectedDuration=Math.max(1,Math.min(30,+$('customDuration').value));document.querySelectorAll('#durationChips button').forEach(x=>x.classList.remove('sel'));updateChoice()}};document.querySelectorAll('#programList .choose').forEach(b=>b.onclick=()=>{selectedProgramKey=b.dataset.program;document.querySelectorAll('#programList .choose').forEach(x=>{let on=x===b;x.classList.toggle('selectedProgram',on);x.querySelector(':scope > span').textContent=on?'✓':'○'});updateChoice()});$('startTrainingBtn').onclick=()=>startTraining(selectedProgramKey)}
+function startTraining(key){let now=performance.now(),p=programs[key];training={key,p,start:now,duration:selectedDuration*60000,cycles:0,phase:0,phaseStart:now};paused=false;$('coachTitle').textContent=p.name;$('pauseBtn').textContent='Ⅱ PAUSE';show('coach');cancelAnimationFrame(raf);tick(now)}
+function pair(now){let p=training.p,prog=(now-training.start)/training.duration,i=p.phases.length===1?0:Math.min(p.phases.length-1,Math.floor(prog*p.phases.length));return p.phases[i]}
+function tick(now){if(!training||paused)return;let elapsed=now-training.start;if(elapsed>=training.duration){finishTraining(training.duration);return}$('totalTime').textContent=fmt(elapsed/1000);let pr=pair(now),secs=training.phase?pr[1]:pr[0],dur=secs*1000,pe=now-training.phaseStart;if(pe>=dur){training.phase=1-training.phase;if(training.phase===0)training.cycles++;training.phaseStart=now;pr=pair(now);secs=training.phase?pr[1]:pr[0];dur=secs*1000;pe=0;if(store.get('vibrate',true)&&navigator.vibrate)navigator.vibrate(45)}
+let frac=Math.min(1,pe/dur),left=Math.max(0,(dur-pe)/1000);$('phaseName').textContent=training.phase?'Ausatmen':'Einatmen';$('phaseCount').textContent=left.toFixed(1);$('phaseBar').style.width=((1-frac)*100)+'%';$('coachCue').textContent=training.p.cue[training.phase];$('coachExtra').textContent=training.p.extra;
+let scale=training.phase?(1.13-frac*.25):(.88+frac*.25);document.querySelectorAll('.lungGroup').forEach((g,i)=>g.style.transform=`scale(${scale}) translateX(${i?((scale-1)*18):(-(scale-1)*18)}px)`);
+raf=requestAnimationFrame(tick)}
+function togglePause(){if(!training)return;if(!paused){paused=true;pauseAt=performance.now();cancelAnimationFrame(raf);$('pauseBtn').textContent='▶ WEITER'}else{let d=performance.now()-pauseAt;training.start+=d;training.phaseStart+=d;paused=false;$('pauseBtn').textContent='Ⅱ PAUSE';raf=requestAnimationFrame(tick)}}
+function stopTraining(){if(training)finishTraining(Math.min(training.duration,performance.now()-training.start))}
+function finishTraining(ms){cancelAnimationFrame(raf);let s=store.get('sessions',[]);s.push({date:new Date().toISOString(),seconds:Math.round(ms/1000),cycles:training.cycles,program:training.key,rating:null});store.set('sessions',s);$('sumTitle').textContent=training.p.name;$('sumCycles').textContent=training.cycles;$('sumTime').textContent=fmt(ms/1000);training=null;show('summary')}
+function rate(n){let s=store.get('sessions',[]);if(s.length){s.at(-1).rating=n;store.set('sessions',s)}document.querySelectorAll('.rating button').forEach((b,i)=>b.classList.toggle('sel',i<n))}
+let selectedSim='calm',sim=null,simInterval=0;
+const simDefs={calm:{name:'Ruhiger Tauchgang',stress:1.0,event:35,text:'Du schwebst ruhig auf Zieltiefe. Halte Bewegungen klein und die Atmung kontinuierlich.'},current:{name:'Strömung',stress:1.55,event:25,text:'Die Strömung nimmt zu. Deine Atemarbeit steigt. Reduziere Tempo und stabilisiere dich.'},mask:{name:'Maske voll',stress:1.45,event:30,text:'Wasser in der Maske: ruhig bleiben, weiteratmen und die erlernte Fertigkeit durchführen.'},recovery:{name:'Hohe Atemarbeit',stress:1.75,event:20,text:'Du bemerkst deutlich erhöhte Atemarbeit. Belastung reduzieren und kontrolliert stabilisieren.'}};
+function bindSim(){document.querySelectorAll('.simChoose').forEach(b=>b.onclick=()=>{selectedSim=b.dataset.sim;document.querySelectorAll('.simChoose').forEach(x=>{let on=x===b;x.classList.toggle('selectedProgram',on);x.querySelector(':scope > span').textContent=on?'✓':'○'})});$('simLaunch').onclick=startSim;$('simCalmBtn').onclick=calmSim;$('simStopBtn').onclick=()=>endSim();$('simAgain').onclick=()=>{$('simResult').classList.add('hidden');$('simSetup').classList.remove('hidden')}}
+function startSim(){let tank=+$('simTank').value,pressure=+$('simPressure').value,depth=+$('simDepth').value,base=+$('simRMV').value;if(!tank||!pressure||!base)return;sim={sec:0,tank,startP:pressure,p:pressure,target:depth,depth:0,base,rmv:base,gas:0,stress:1,def:simDefs[selectedSim],calmed:false,rmvSum:0};$('simSetup').classList.add('hidden');$('simResult').classList.add('hidden');$('simLive').classList.remove('hidden');updateSim();clearInterval(simInterval);simInterval=setInterval(stepSim,1000)}
+function stepSim(){sim.sec++;sim.depth=Math.min(sim.target,sim.sec/20*sim.target);if(sim.sec>sim.def.event&&!sim.calmed)sim.stress=sim.def.stress;let targetRMV=sim.base*sim.stress;sim.rmv+= (targetRMV-sim.rmv)*.08;let ata=1+sim.depth/10,gasSec=sim.rmv*ata/60;sim.gas+=gasSec;sim.p=sim.startP-sim.gas/sim.tank;sim.rmvSum+=sim.rmv;if(sim.sec===sim.def.event){$('sceneTitle').textContent=sim.def.name;$('sceneText').textContent=sim.def.text}if(sim.p<=50||sim.sec>=180)endSim();else updateSim()}
+function calmSim(){if(!sim)return;sim.calmed=true;sim.stress=1;$('sceneTitle').textContent='Belastung reduziert';$('sceneText').textContent='Du reduzierst die Belastung und findest zurück zu einer ruhigen, kontinuierlichen Atmung.'}
+function updateSim(){$('simTime').textContent=fmt(sim.sec);$('simLiveDepth').textContent=sim.depth.toFixed(1)+' m';$('simLivePressure').textContent=Math.max(0,sim.p).toFixed(0)+' bar';$('simLiveRMV').textContent=sim.rmv.toFixed(1);$('simGasUsed').textContent=sim.gas.toFixed(0);let pct=Math.min(100,20+(sim.stress-1)*100);$('stressBar').style.width=pct+'%';$('stressText').textContent=sim.stress>1.4?'hoch':sim.stress>1.1?'erhöht':'niedrig'}
+function endSim(){if(!sim)return;clearInterval(simInterval);$('simLive').classList.add('hidden');$('simResult').classList.remove('hidden');$('simEndPressure').textContent=Math.max(0,sim.p).toFixed(0);$('simAvgRMV').textContent=(sim.rmvSum/Math.max(1,sim.sec)).toFixed(1);$('simResultTitle').textContent=sim.def.name;$('simResultText').textContent=`Simulierte Tauchzeit ${fmt(sim.sec)}, Gasverbrauch ${sim.gas.toFixed(0)} Liter. ${sim.calmed?'Du hast die Belastung aktiv reduziert.':'Die erhöhte Belastung blieb bestehen und erhöhte den simulierten Gasverbrauch.'}`;sim=null}
+function saveDive(){let tank=+$('tank').value,start=+$('startp').value,end=+$('endp').value,min=+$('minutes').value,depth=+$('depth').value,temp=+$('temp').value;if(!tank||start<=end||!min||depth<0){$('calc').textContent='Bitte Eingaben prüfen.';return}let used=tank*(start-end),ata=1+depth/10,rmv=used/min/ata,a=store.get('dives',[]);a.push({id:Date.now(),date:$('date').value||new Date().toISOString().slice(0,10),tank,start,end,min,depth,temp,rmv:+rmv.toFixed(1)});store.set('dives',a);$('calc').innerHTML=`<b>RMV ${rmv.toFixed(1)} l/min</b><br>${used.toFixed(0)} Liter · ${ata.toFixed(2)} ATA`;dash()}
 function renderLog(){let a=store.get('dives',[]).slice().reverse();$('logList').innerHTML=a.length?a.map(x=>`<div class="program"><div class="ico">🤿</div><div class="grow"><b>${new Date(x.date+'T12:00').toLocaleDateString('de-DE')}</b><small>${x.depth} m · ${x.min} min · ${x.tank} l</small></div><div><b>${x.rmv}</b><small> l/min</small></div></div>`).join(''):'<div class="card muted">Noch keine Tauchgänge gespeichert.</div>'}
-function dash(){let a=store.get('dives',[]),s=store.get('sessions',[]),avg=a.length?a.reduce((q,x)=>q+x.rmv,0)/a.length:null;$('avg').textContent=avg?avg.toFixed(1):'–';$('divesN').textContent=a.length}
-function progress(){let a=store.get('dives',[]),s=store.get('sessions',[]);$('pDives').textContent=a.length;$('pTrain').textContent=s.length;$('trainMinutes').textContent=Math.round(s.reduce((q,x)=>q+x.seconds,0)/60)+' min';if(!a.length){$('chart').innerHTML='<span class="muted">Speichere Tauchgänge, um deinen RMV-Verlauf zu sehen.</span>';return}let last=a.slice(-10),mx=Math.max(...last.map(x=>x.rmv),25);$('chart').innerHTML=last.map(x=>`<div class="bar" style="height:${Math.max(12,x.rmv/mx*150)}px"><span>${x.rmv}</span></div>`).join('')}
-const scenarios={calm:['Ruhiges Schweben','Stelle dir neutrale Tarierung und eine entspannte, kontinuierliche Atmung vor.'],current:['Leichte Strömung','Belastung steigt: Tempo reduzieren, Position stabilisieren und kontinuierlich weiteratmen.'],mask:['Maske läuft voll','Aufgabe nach deiner Ausbildung ruhig durchführen und dabei kontinuierlich weiteratmen.'],recovery:['Nach Belastung','Belastung reduzieren, stabilisieren und zur normalen Atmung zurückfinden.']};
-function startSim(k){let [t,d]=scenarios[k];$('sceneTitle').textContent=t;$('sceneText').textContent=d;clearInterval(simTimer);simSec=0;$('simTime').textContent='00:00';simTimer=setInterval(()=>$('simTime').textContent=fmtMs(++simSec*1000),1000)}
-function exportData(){let data={version:3,exported:new Date().toISOString(),dives:store.get('dives',[]),sessions:store.get('sessions',[])};let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='DiveBreath-Backup.json';a.click()}
-function clearData(){if(confirm('Alle lokal gespeicherten Tauchgänge und Trainingsdaten löschen?')){localStorage.clear();dash();show('home')}}
+function dash(){let a=store.get('dives',[]),avg=a.length?a.reduce((q,x)=>q+x.rmv,0)/a.length:null;let e=$('avg');if(e)e.textContent=avg?avg.toFixed(1):'–';e=$('divesN');if(e)e.textContent=a.length}
+function progress(){let a=store.get('dives',[]),s=store.get('sessions',[]);$('pDives').textContent=a.length;$('pTrain').textContent=s.length;$('trainMinutes').textContent=Math.round(s.reduce((q,x)=>q+x.seconds,0)/60)+' min';$('chart').innerHTML=a.length?a.slice(-10).map(x=>`<div class="bar" style="height:${Math.max(12,x.rmv/Math.max(...a.slice(-10).map(y=>y.rmv),25)*150)}px"><span>${x.rmv}</span></div>`).join(''):'<span class="muted">Noch keine RMV-Daten.</span>'}
+function exportData(){let blob=new Blob([JSON.stringify({dives:store.get('dives',[]),sessions:store.get('sessions',[])},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='DiveBreath-Backup.json';a.click()}
+function clearData(){if(confirm('Alle lokalen Daten löschen?')){localStorage.clear();show('home')}}
 function toggleVib(){store.set('vibrate',!store.get('vibrate',true));$('vib').style.opacity=store.get('vibrate',true)?1:.35}
-addEventListener('load',()=>{$('date').value=new Date().toISOString().slice(0,10);dash();$('vib').style.opacity=store.get('vibrate',true)?1:.35;if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js')});
-
-let selectedProgramKey='calm';
-function updateTrainingSelection(){
-  const mins=selectedDuration;
-  const p=programs[selectedProgramKey];
-  const ds=document.getElementById('durationStatus');
-  const ps=document.getElementById('programStatus');
-  const sb=document.querySelector('#startTrainingBtn small');
-  if(ds) ds.innerHTML=`Ausgewählt: <b>${mins} ${mins===1?'Minute':'Minuten'}</b>`;
-  if(ps) ps.innerHTML=`Programm: <b>${p.name}</b>`;
-  if(sb) sb.textContent=`${mins} ${mins===1?'MINUTE':'MINUTEN'} · ${p.name.toUpperCase()}`;
-}
-function bindTrainingControls(){
-  document.querySelectorAll('#durationChips button').forEach(btn=>{
-    btn.onclick=()=>{
-      selectedDuration=Number(btn.dataset.min);
-      document.querySelectorAll('#durationChips button').forEach(x=>x.classList.toggle('sel',x===btn));
-      const c=document.getElementById('customDuration'); if(c)c.value='';
-      updateTrainingSelection();
-    };
-  });
-  const custom=document.getElementById('customDuration');
-  if(custom) custom.oninput=()=>{
-    if(custom.value!==''){
-      selectedDuration=Math.max(1,Math.min(30,Number(custom.value)||1));
-      document.querySelectorAll('#durationChips button').forEach(x=>x.classList.remove('sel'));
-      updateTrainingSelection();
-    }
-  };
-  document.querySelectorAll('#programList .choose').forEach(btn=>{
-    btn.onclick=()=>{
-      selectedProgramKey=btn.dataset.program;
-      document.querySelectorAll('#programList .choose').forEach(x=>{
-        const on=x===btn;x.classList.toggle('selectedProgram',on);
-        const mark=x.querySelector(':scope > span');if(mark)mark.textContent=on?'✓':'○';
-      });
-      updateTrainingSelection();
-    };
-  });
-  const start=document.getElementById('startTrainingBtn');
-  if(start) start.onclick=()=>startTraining(selectedProgramKey);
-  updateTrainingSelection();
-}
-document.addEventListener('DOMContentLoaded',bindTrainingControls);
-
-let selectedSimKey='calm',simRunning=false;
-function bindRC5(){
- const enter=document.getElementById('enterAppBtn');
- if(enter) enter.onclick=()=>show('training');
-
- document.querySelectorAll('.simChoose').forEach(btn=>{
-   btn.onclick=()=>{
-     selectedSimKey=btn.dataset.sim;
-     document.querySelectorAll('.simChoose').forEach(x=>{
-       const on=x===btn;x.classList.toggle('selectedProgram',on);
-       const m=x.querySelector(':scope > span');if(m)m.textContent=on?'✓':'○';
-     });
-     const [t,d]=scenarios[selectedSimKey];
-     document.getElementById('sceneTitle').textContent=t;
-     document.getElementById('sceneText').textContent=d;
-     document.getElementById('simGuide').innerHTML=`<b>${t}</b><p>${d}</p>`;
-     resetSimClock();
-   };
- });
- const start=document.getElementById('simStartBtn');
- if(start) start.onclick=()=>{
-   if(!simRunning){
-     simRunning=true;start.textContent='Ⅱ PAUSE';
-     clearInterval(simTimer);
-     simTimer=setInterval(()=>{simSec++;document.getElementById('simTime').textContent=fmtMs(simSec*1000);},1000);
-     document.getElementById('simGuide').innerHTML=`<b>Simulation läuft</b><p>${scenarios[selectedSimKey][1]}</p>`;
-   } else {
-     simRunning=false;start.textContent='▶ WEITER';
-     clearInterval(simTimer);
-   }
- };
- const reset=document.getElementById('simResetBtn');
- if(reset) reset.onclick=resetSimClock;
-}
-function resetSimClock(){
- clearInterval(simTimer);simRunning=false;simSec=0;
- const t=document.getElementById('simTime');if(t)t.textContent='00:00';
- const b=document.getElementById('simStartBtn');if(b)b.textContent='▶ SIMULATION STARTEN';
-}
-document.addEventListener('DOMContentLoaded',bindRC5);
+document.addEventListener('DOMContentLoaded',()=>{$('date').value=new Date().toISOString().slice(0,10);$('enterAppBtn').onclick=()=>show('training');bindTraining();bindSim();updateChoice();dash();$('vib').style.opacity=store.get('vibrate',true)?1:.35;if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js')});

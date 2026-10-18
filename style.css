@@ -46,3 +46,12 @@ button.program.choose.selectedProgram>span{color:#35def5}
 .titleArtwork.immersive{position:relative;margin-bottom:16px}.titleArtwork.immersive img{min-height:68vh;object-fit:cover;object-position:center top}
 .heroStart{position:absolute;left:16px;right:16px;bottom:18px;z-index:2}.heroStart .btn{box-shadow:0 0 35px #18d6f477}
 .simChoose{width:100%;color:var(--text);font:inherit;text-align:left}.simChoose.selectedProgram{border-color:#35def5;background:linear-gradient(145deg,#073b4d,#063140)}.simChoose>span{font-size:24px;color:#35def5}.simControls{display:grid;grid-template-columns:2fr 1fr;gap:9px;margin:14px 0}
+
+.heroCrop{height:min(71vh,690px);margin:-8px -18px 16px;position:relative;overflow:hidden;background:#00121b}
+.heroCrop img{display:block;width:100%;height:auto;min-height:100%;object-fit:cover;object-position:center top}
+.heroHit{position:absolute;left:10%;right:10%;top:67%;height:13%;border:0;background:transparent;cursor:pointer}
+.lungGroup{transform-box:fill-box;transform-origin:center;will-change:transform}.lung{fill:url(#lungGlow);stroke:#87f4ff;stroke-width:2.5}.bronchi{fill:none;stroke:#b4f8ff;stroke-width:5;stroke-linecap:round;opacity:.75}.trachea{stroke:#b4f8ff;stroke-width:12}
+#lungs{transition:none}.lungGroup{transition:none}
+.hidden{display:none!important}.simOcean{height:260px;border-radius:24px;position:relative;overflow:hidden;background:linear-gradient(#087b9e,#06465f 50%,#032b3b);border:1px solid #11718b;margin-bottom:14px}.simOcean:after{content:"";position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(transparent,#021c27)}
+.simHud{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:14px;position:relative;z-index:2}.simHud span{background:#001c29bb;border:1px solid #1c7288;border-radius:12px;padding:8px;text-align:center}.simHud small{display:block;color:#78b9c8;font-size:9px}.simHud b{font-size:16px}.diver{font-size:62px;position:absolute;left:42%;top:44%;filter:drop-shadow(0 7px 10px #001)}
+.eventCard h2{margin-bottom:5px}.stressLine{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;margin-top:14px;font-size:12px}.stressLine>div{height:8px;background:#0a3442;border-radius:99px;overflow:hidden}.stressLine i{display:block;width:20%;height:100%;background:#35def5;border-radius:99px;transition:width .5s}.simControls{display:grid;grid-template-columns:2fr 1fr;gap:9px;margin:14px 0}select{width:100%;box-sizing:border-box;background:#052632;color:#e8fbff;border:1px solid #18566a;border-radius:12px;padding:13px;font-size:16px}
