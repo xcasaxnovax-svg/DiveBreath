@@ -1,15 +1,21 @@
 <!doctype html><html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#02141e"><link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=rc6"><title>DiveBreath</title></head>
-<body><div class="app"><header class="top"><div class="brand">◢ Dive<span>Breath</span></div><div class="badge">1.0 RC6</div></header><main>
+<link rel="icon" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=rc7"><title>DiveBreath</title></head>
+<body><div class="app"><header class="top"><div class="brand">◢ Dive<span>Breath</span></div><div class="badge">1.0 RC7</div></header><main>
 
-<section id="home" class="view active">
-<div class="heroCrop">
-  <img src="./hero.png?v=rc6" alt="DiveBreath">
-  <button id="enterAppBtn" type="button" class="heroHit" aria-label="Los geht's"></button>
+<section id="home" class="view active noScrollHome">
+<div class="landing">
+  <img class="landingBg" src="./hero.png?v=rc7" alt="">
+  <div class="landingShade"></div>
+  <div class="landingContent">
+    <div class="landingLogo">Dive<span>Breath</span></div>
+    <div class="landingTag">Ruhiger atmen. Bewusster tauchen.</div>
+    <div class="landingClaim">BESSERE ATMUNG · MEHR RUHE · MEHR KONTROLLE</div>
+    <button id="enterAppBtn" type="button" class="btn landingStart">LOS GEHT’S →<small>IN DIVEBREATH EINTAUCHEN</small></button>
+    <div class="landingSafety">⚠️ Nur an Land trainieren · Beim Gerätetauchen niemals die Luft anhalten.</div>
+  </div>
 </div>
-<div class="card safety"><b>⚠️ Sicherheit</b><p>Übungen nur an Land durchführen. Beim Gerätetauchen niemals die Luft anhalten. DiveBreath ersetzt keine Tauchausbildung, Tauchplanung oder einen Tauchcomputer.</p></div>
 </section>
 <section id="training" class="view"><div class="sectionTitle">Atemtraining</div>
 <div class="card"><div class="eyebrow">1 · TRAININGSDAUER</div><h2>Wie lange möchtest du trainieren?</h2>
@@ -35,11 +41,15 @@
 </section>
 <section id="coach" class="view"><div class="coachTop"><div><div class="eyebrow">LIVE COACH</div><h2 id="coachTitle">Ruhiger Grundrhythmus</h2></div><div><small class="muted">Trainingszeit</small><div id="totalTime" class="timer">00:00</div></div></div>
 <div class="lungStage">
-<svg id="lungs" viewBox="0 0 360 320" aria-label="Animierte Lunge">
-<defs><radialGradient id="lungGlow"><stop offset="0" stop-color="#64efff"/><stop offset=".55" stop-color="#13bcd6"/><stop offset="1" stop-color="#08758f"/></radialGradient></defs>
-<path class="trachea" d="M180 25 C180 55 180 76 180 101 M180 92 C165 105 151 116 140 132 M180 92 C195 105 209 116 220 132"/>
-<g class="lungGroup leftG"><path class="lung left" d="M159 104 C132 93 101 101 82 126 C57 159 48 210 61 250 C70 278 92 292 116 284 C142 275 158 246 163 211 C168 175 165 132 159 104 Z"/><path class="bronchi" d="M145 126 C124 145 108 169 98 201 M128 151 L111 145 M116 174 L94 168 M106 198 L87 207"/></g>
-<g class="lungGroup rightG"><path class="lung right" d="M201 104 C228 93 259 101 278 126 C303 159 312 210 299 250 C290 278 268 292 244 284 C218 275 202 246 197 211 C192 175 195 132 201 104 Z"/><path class="bronchi" d="M215 126 C236 145 252 169 262 201 M232 151 L249 145 M244 174 L266 168 M254 198 L273 207"/></g>
+<svg id="lungs" viewBox="0 0 400 360" aria-label="Animierte Lunge">
+<defs>
+ <radialGradient id="tissue"><stop offset="0" stop-color="#7defff"/><stop offset=".48" stop-color="#22bfd4"/><stop offset="1" stop-color="#087187"/></radialGradient>
+ <filter id="softGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<path class="windpipe" d="M200 22 C199 54 200 79 200 105"/>
+<path class="mainBronchi" d="M200 96 C181 108 166 121 151 139 M200 96 C219 108 234 121 249 139"/>
+<g class="lungGroup leftG"><path class="lung realistic" d="M178 107 C151 91 116 94 91 117 C65 142 53 180 50 219 C47 259 58 302 89 321 C109 333 134 323 150 304 C169 281 177 247 181 213 C185 178 185 132 178 107Z"/><path class="bronchiTree" d="M157 132 C137 151 120 174 108 203 M137 157 L117 148 M126 177 L102 171 M116 200 L91 197 M109 219 L89 232 M119 198 L131 220 M107 238 L98 265 M131 220 L140 250"/></g>
+<g class="lungGroup rightG"><path class="lung realistic" d="M222 107 C249 91 284 94 309 117 C335 142 347 180 350 219 C353 259 342 302 311 321 C291 333 266 323 250 304 C231 281 223 247 219 213 C215 178 215 132 222 107Z"/><path class="bronchiTree" d="M243 132 C263 151 280 174 292 203 M263 157 L283 148 M274 177 L298 171 M284 200 L309 197 M291 219 L311 232 M281 198 L269 220 M293 238 L302 265 M269 220 L260 250"/></g>
 </svg>
 <div id="phaseName" class="phaseName">Einatmen</div><div id="phaseCount" class="phaseCount">4.0</div><div class="phaseUnit">Sekunden</div></div>
 <div class="progressTrack"><div id="phaseBar"></div></div>
@@ -69,7 +79,13 @@
 <div class="simOcean"><div class="simHud"><span><small>ZEIT</small><b id="simTime">00:00</b></span><span><small>TIEFE</small><b id="simLiveDepth">0.0 m</b></span><span><small>DRUCK</small><b id="simLivePressure">200 bar</b></span></div><div class="diver">🤿</div><span class="bubble b1"></span><span class="bubble b2"></span></div>
 <div class="card eventCard"><div class="eyebrow">LIVE-SZENARIO</div><h2 id="sceneTitle">Abstieg</h2><p id="sceneText">Ruhig und kontinuierlich atmen.</p><div class="stressLine"><span>Belastung</span><div><i id="stressBar"></i></div><b id="stressText">niedrig</b></div></div>
 <div class="grid"><div class="card">Simulierter RMV<div id="simLiveRMV" class="value">18</div><small>l/min</small></div><div class="card">Gas verbraucht<div id="simGasUsed" class="value">0</div><small>Liter</small></div></div>
-<div class="simControls"><button id="simCalmBtn" class="btn">ATEM KONTROLLIEREN</button><button id="simStopBtn" class="btn secondary">BEENDEN</button></div>
+<div class="breathSim">
+<div class="eyebrow">DEINE ATMUNG</div>
+<div class="breathButtons"><button id="simInBtn" type="button">🫁 EINATMEN</button><button id="simOutBtn" type="button">💨 AUSATMEN</button></div>
+<div class="breathMeter"><i id="breathMeterFill"></i></div>
+<div id="breathFeedback" class="choiceStatus">Beginne mit <b>Einatmen</b>.</div>
+</div>
+<div class="simControls"><button id="simCalmBtn" class="btn">BELASTUNG REDUZIEREN</button><button id="simStopBtn" class="btn secondary">BEENDEN</button></div>
 <p class="muted fine">Alle Werte sind eine Trainingssimulation und keine Tauchplanung. Für reale Tauchgänge gelten Ausbildung, Gasplanung und Tauchcomputer.</p>
 </div>
 
@@ -91,4 +107,4 @@
 <button class="btn secondary" onclick="exportData()">Backup exportieren</button><button class="btn secondary" onclick="clearData()">Lokale Daten löschen</button></section>
 </main></div>
 <nav><div class="navin"><button class="on" data-v="home" onclick="show('home')"><i>⌂</i>Start</button><button data-v="training" onclick="show('training')"><i>🫁</i>Training</button><button data-v="simulation" onclick="show('simulation')"><i>◉</i>Simulation</button><button data-v="log" onclick="show('log')"><i>🤿</i>Logbuch</button><button data-v="progress" onclick="show('progress')"><i>▥</i>Fortschritt</button></div></nav>
-<script src="./app.js?v=rc6"></script></body></html>
+<script src="./app.js?v=rc7"></script></body></html>
