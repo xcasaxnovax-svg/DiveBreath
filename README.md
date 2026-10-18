@@ -1,2 +1,4 @@
-# DiveBreath 1.0 V17 INSTALLABLE
-V16 functionality retained. Added installable PWA manifest/service worker, premium DiveBreath launcher icon, standalone display metadata, and height-responsive no-scroll compaction.
+# DiveBreath V16 FITSCREEN
+Basis ist exakt V16 COMPLETE.
+Geändert wurden ausschließlich responsive Größen und Abstände in style.css sowie der Service-Worker-Cache-Name.
+HTML, JavaScript, Funktionen, Bilder und Animationen sind unverändert.

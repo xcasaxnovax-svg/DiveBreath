@@ -37,48 +37,78 @@
 .phaseBar{height:14px;border:1px solid #17677b;border-radius:99px;padding:2px;background:#03212c;margin:4px 0 9px}.phaseBar i{height:100%;width:0;display:block;border-radius:99px;background:#23e7f6;transition:width .15s linear}.breathBtn.exhaleBtn{background:linear-gradient(90deg,#ffb321,#ff602a)}.resultActions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .field{display:grid;grid-template-columns:1fr 120px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #164d5d}.field input{background:#001a24;border:1px solid #17657a;color:white;border-radius:9px;padding:10px;width:100%}.rmvPreview{font-size:12px;color:#9fc4cc;line-height:1.4}.diveCard{background:#052532;border:1px solid #146179;border-radius:14px;padding:12px;margin:10px 0}.diveCard b{color:#24e3f5}.diveCard button{float:right;border:0;background:none;color:#ff806b}.progressCards{display:grid;grid-template-columns:1fr 1fr;gap:8px}.progressCards .panel{margin:0;text-align:center}.progressCards b{display:block;font-size:25px;color:#27e4f4;margin-top:5px}.progressCards small{color:#9fc4cc}
 
-/* V17: height-responsive compaction only. Existing layout/functions stay intact. */
-html,body{height:100%;overscroll-behavior:none}
-#app{height:100dvh;overflow:hidden}
-main{height:calc(100dvh - 174px);overflow:hidden}
+
+/* V16 FITSCREEN
+   Nur Größen/Abstände werden abhängig von der Displayhöhe skaliert.
+   Layout, Funktionen, Bilder und Animationen von V16 bleiben unverändert. */
+html,body{height:100%;overflow:hidden}
+#app{height:100dvh;min-height:0;overflow:hidden}
+main{height:calc(100dvh - 144px);overflow:hidden}
 .page.active{height:100%;overflow:hidden}
-@media (max-height:850px){
- .page{padding-top:10px!important;padding-bottom:8px!important}
- .page h2{margin:4px 0 8px!important;font-size:27px!important}
- .presets{margin-bottom:5px!important}
- .lungStage{max-height:300px!important}
- .lungAnim{max-height:270px!important;margin:auto!important}
- .circle{width:142px!important;height:142px!important;margin:2px auto!important}
- .phase{margin:1px 0!important}
- .stats{margin:5px 0!important}
- .controls{margin-top:5px!important}
- .checkLead{margin:4px 0 7px!important}
- .durations{margin:6px 0!important}
- .customDuration{padding:6px 10px!important}
- .setupDiver{height:235px!important;margin-top:4px!important}
- #checkSetup .cta{padding:14px!important}
- .checkHint{padding:7px 10px!important}
- .countScene{height:315px!important}
- .countCircle{width:165px!important;height:165px!important}
- .countCircle b{font-size:60px!important}
- .diverSceneV16{height:250px!important}
- .miniStats{margin-bottom:4px!important}
- .breathBtn{padding:11px!important}
- .timerHud{margin:4px 0!important}
- .checkControls{gap:7px!important}
- .checkControls button{padding:9px!important}
- .resultBadge{width:42px!important;height:42px!important;font-size:25px!important;margin:2px auto!important}
- #checkResult h2{font-size:23px!important;margin:2px 0!important}
- #resultPraise{font-size:12px!important;margin:3px 0!important}
- .resultGrid span{padding:7px!important}
- .resultGrid b{font-size:15px!important}
- #checkResult .panel{margin:5px 0!important;padding:7px!important}
- #checkChart{max-height:105px!important}
- .feedback{padding:8px!important;margin:5px 0!important;font-size:11px!important}
- .field{padding:4px 0!important}
- .field input{padding:7px!important}
- .logForm{margin:3px 0!important;padding:8px!important}
- .diveCard{padding:7px!important;margin:5px 0!important;font-size:11px!important}
- .progressCards{gap:5px!important}
- .progressCards .panel{padding:8px!important}
+
+/* Samsung/typische große Smartphones */
+@media (max-height:900px){
+  header{height:62px}
+  #app{padding-bottom:68px}
+  main{height:calc(100dvh - 130px);padding:9px 12px}
+  nav{height:68px}
+  .page h2{margin:3px 0 7px;font-size:25px}
+  .presets{gap:5px}
+  .presets button{padding:7px 2px}
+  .lungStage{height:285px}
+  .ring{width:118px;height:118px;margin:4px auto;border-width:6px}
+  .ring strong{font-size:40px}
+  .bar{height:12px}
+  .stats{margin:6px 0;padding:8px 4px}
+  .controls{gap:4px}
+  .controls button{width:55px;height:55px}
+  .checkLead{margin:3px 0 6px}
+  .durations{margin:5px 0}
+  .customDuration{padding:6px 10px}
+  .setupDiver{height:210px;margin-top:3px;margin-bottom:-25px}
+  #checkSetup .cta{padding:13px;margin-top:0}
+  .checkHint{padding:6px 9px}
+  .countScene{height:305px;margin-bottom:4px}
+  .countCircle{width:160px;height:160px}
+  .countCircle b{font-size:58px}
+  .diverSceneV16{height:225px;margin-bottom:3px}
+  .miniStats{margin-bottom:3px}
+  .breathBtn{padding:10px}
+  .timerHud{margin:3px 0}
+  .checkControls{gap:6px}
+  .checkControls button{padding:8px}
+  .resultBadge{width:40px;height:40px;font-size:24px;margin:1px auto}
+  #checkResult h2{font-size:21px;margin:2px 0}
+  #resultPraise{font-size:11px;margin:2px 0}
+  .resultGrid span{padding:5px}
+  .resultGrid b{font-size:14px}
+  #checkResult .panel{margin:4px 0;padding:6px}
+  #checkChart{height:82px!important}
+  .feedback{padding:6px;margin:4px 0;font-size:10px}
+  .resultActions{gap:5px}
+  .resultActions button{padding:8px}
+  .logForm{margin:2px 0;padding:7px}
+  .field{padding:3px 0}
+  .field input{padding:6px}
+  .rmvPreview{margin:5px 0}
+  .diveCard{padding:6px;margin:4px 0;font-size:10px}
+  .progressCards{gap:4px}
+  .progressCards .panel{padding:7px}
+}
+
+/* Etwas niedrigere Displays */
+@media (max-height:780px){
+  header{height:56px}
+  #app{padding-bottom:62px}
+  main{height:calc(100dvh - 118px);padding:6px 10px}
+  nav{height:62px}
+  .page h2{font-size:22px;margin:1px 0 4px}
+  .lungStage{height:245px}
+  .ring{width:105px;height:105px}
+  .ring strong{font-size:35px}
+  .setupDiver{height:175px}
+  .countScene{height:255px}
+  .diverSceneV16{height:190px}
+  .checkLead{font-size:11px}
+  .feedback{font-size:9px}
 }
