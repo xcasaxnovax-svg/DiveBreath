@@ -1,2 +1,2 @@
-# DiveBreath 1.0 RC1
-Private test build. Do not publish commercially before validation, legal/privacy review and store preparation.
+# DiveBreath 1.0 RC3
+Private multi-day test build. Includes animated lungs, selectable training duration, per-phase countdown, pause/resume/stop, distinct training programs, simulation, RMV logbook, progress and local backup.

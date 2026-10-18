@@ -1,10 +1,76 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#02141e"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon-192.png"><link rel="stylesheet" href="./style.css"><title>DiveBreath</title></head><body><div class="app"><header class="top"><div class="brand">◢ Dive<span>Breath</span></div><div class="badge">1.0 RC1</div></header><main>
-<section id="home" class="view active"><div class="hero"><div class="eyebrow">DEIN DIVE COACH</div><h1>Atme ruhig. Tauch länger entspannt.</h1><div class="muted">Training, Simulation und Gasverbrauch in einer App.</div><button class="btn" onclick="startBreath()">▶ ATEMTRAINING STARTEN</button></div><div class="grid"><div class="card">Ø RMV<div id="avg" class="value">–</div><span class="muted">l/min</span></div><div class="card">Tauchgänge<div id="divesN" class="value">0</div><span class="muted">gespeichert</span></div></div><div class="sectionTitle">Heute trainieren</div><div class="program" onclick="startBreath()"><div class="ico">🫁</div><div class="grow"><b>Ruhig atmen</b><small>Grundlage für entspanntes Tauchen</small></div>›</div><div class="program" onclick="startBreath('recovery')"><div class="ico">🧘</div><div class="grow"><b>Nach Belastung beruhigen</b><small>Zur normalen Atmung zurückfinden</small></div>›</div><div class="program" onclick="startSim('current')"><div class="ico">🌊</div><div class="grow"><b>Tauchsimulation</b><small>Stresssituationen mental trainieren</small></div>›</div><div class="card" style="margin-top:18px"><b>Sicherheit zuerst</b><p class="muted">DiveBreath trainiert keine Atempausen und kein „Sparatmen“. Beim Gerätetauchen kontinuierlich atmen. Die App ersetzt keine Tauchausbildung, Tauchplanung oder einen Tauchcomputer.</p></div></section>
-<section id="training" class="view"><div class="sectionTitle">Trainingsprogramme</div><div class="program" onclick="startBreath()"><div class="ico">🫁</div><div class="grow"><b>Ruhig atmen</b><small>6 Min · Level 1</small></div>›</div><div class="program" onclick="startBreath('recovery')"><div class="ico">💙</div><div class="grow"><b>Stress reduzieren</b><small>8 Min · nach Belastung</small></div>›</div><div class="program" onclick="startBreath()"><div class="ico">⏱️</div><div class="grow"><b>Hoher Luftverbrauch</b><small>Bewusstsein statt Luftanhalten</small></div>›</div><div class="program" onclick="startBreath()"><div class="ico">⚖️</div><div class="grow"><b>Tarierung & Atmung</b><small>Ruhiger Körper, ruhiger Atem</small></div>›</div><div class="program" onclick="startBreath()"><div class="ico">🌙</div><div class="grow"><b>Vor dem Tauchgang</b><small>Mentale Vorbereitung</small></div>›</div></section>
-<section id="coach" class="view"><div class="breathWrap"><div class="eyebrow">LIVE COACH</div><h1 id="coachTitle">Ruhig atmen</h1><div id="coachTime" class="timer">00:00</div><div id="breath" class="breath">Einatmen</div><div class="card"><b id="coachHint">Ruhig einatmen</b><p class="muted">Kein Luftanhalten. Finde einen entspannten, natürlichen Rhythmus.</p></div><button class="btn secondary" onclick="stopBreath()">Training beenden</button></div></section>
-<section id="log" class="view"><div class="sectionTitle">Tauchgänge</div><div id="logList"></div><button class="btn" onclick="show('newDive')">＋ TAUCHGANG EINTRAGEN</button></section>
-<section id="newDive" class="view"><div class="sectionTitle">Tauchgang eintragen</div><div class="card"><label>Datum</label><input id="date" type="date"><div class="row"><div><label>Flasche (Liter)</label><input id="tank" type="number" value="12" step=".1"></div><div><label>Ø Tiefe (m)</label><input id="depth" type="number" value="12" step=".1"></div></div><div class="row"><div><label>Startdruck (bar)</label><input id="startp" type="number" value="200"></div><div><label>Enddruck (bar)</label><input id="endp" type="number" value="60"></div></div><div class="row"><div><label>Tauchzeit (min)</label><input id="minutes" type="number" value="43"></div><div><label>Wasser °C</label><input id="temp" type="number" value="18"></div></div><button class="btn" onclick="saveDive()">RMV BERECHNEN & SPEICHERN</button><div id="calc" class="result muted">RMV = verbrauchtes Flaschengas ÷ Zeit ÷ Umgebungsdruck.</div></div></section>
-<section id="simulation" class="view"><div class="sectionTitle">Tauchsimulation</div><div class="scenario"><div class="eyebrow">SIMULATION · 15 M</div><div class="depth">15 m</div><div id="simTime" class="timer">00:00</div><span class="bubble b1"></span><span class="bubble b2"></span><h2 id="sceneTitle">Leichte Strömung</h2><p id="sceneText">Belastung steigt. Atmung kontrolliert halten.</p></div><div class="sectionTitle">Szenen</div><div class="program" onclick="startSim('calm')"><div class="ico">🤿</div><div class="grow"><b>Ruhiges Schweben</b><small>Entspannen & tarieren</small></div></div><div class="program" onclick="startSim('current')"><div class="ico">🌊</div><div class="grow"><b>Leichte Strömung</b><small>Belastung kontrollieren</small></div></div><div class="program" onclick="startSim('mask')"><div class="ico">🥽</div><div class="grow"><b>Maske läuft voll</b><small>Ruhig bleiben & weiteratmen</small></div></div><div class="program" onclick="startSim('recovery')"><div class="ico">💙</div><div class="grow"><b>Nach Belastung beruhigen</b><small>Normalen Rhythmus finden</small></div></div></section>
-<section id="progress" class="view"><div class="sectionTitle">Dein Fortschritt</div><div class="grid"><div class="card">Tauchgänge<div id="pDives" class="value">0</div></div><div class="card">Trainings<div id="pTrain" class="value">0</div></div></div><div class="card"><b>RMV-Entwicklung · letzte 10</b><div id="chart" class="chart"></div></div><div class="card" style="margin-top:14px"><b>Wichtig bei Vergleichen</b><p class="muted">RMV hängt u. a. von Belastung, Strömung, Temperatur, Ausrüstung und Stress ab. Einzelne Tauchgänge nicht überbewerten.</p></div></section>
-<section id="settings" class="view"><div class="sectionTitle">Einstellungen</div><div class="card"><div class="setting"><span>Vibration beim Atemwechsel</span><div id="vib" class="switch" onclick="toggleVib()"></div></div><div class="setting"><span>Einheiten</span><b>Metrisch</b></div><div class="setting"><span>Datenspeicherung</span><b>Lokal</b></div></div><button class="btn secondary" onclick="exportData()">Backup exportieren</button><button class="btn secondary" onclick="clearData()">Lokale Daten löschen</button><div class="card" style="margin-top:14px"><b>Über DiveBreath</b><p class="muted">Release Candidate 1 · Für mehrtägigen Funktionstest vor einer Veröffentlichung.</p></div></section>
-</main></div><nav><div class="navin"><button class="on" data-v="home" onclick="show('home')"><i>⌂</i>Start</button><button data-v="training" onclick="show('training')"><i>🫁</i>Training</button><button data-v="simulation" onclick="show('simulation')"><i>◉</i>Simulation</button><button data-v="log" onclick="show('log')"><i>🤿</i>Logbuch</button><button data-v="progress" onclick="show('progress')"><i>▥</i>Fortschritt</button></div></nav><script src="./app.js"></script></body></html>
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#02141e"><link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png"><link rel="stylesheet" href="./style.css"><title>DiveBreath</title></head>
+<body><div class="app"><header class="top"><div class="brand">◢ Dive<span>Breath</span></div><div class="badge">1.0 RC3</div></header><main>
+
+<section id="home" class="view active">
+<div class="splash"><div class="splashShade"></div><div class="splashContent">
+<div class="splashLogo">Dive<span>Breath</span></div><div class="splashSub">RUHIGER ATMEN · BEWUSSTER TAUCHEN</div>
+<div class="splashClaim">BESSERE ATEMKONTROLLE.<br>MEHR RUHE UNTER WASSER.</div></div></div>
+<div class="featureGrid">
+<div class="mini" onclick="show('training')"><b>🫁</b><span>Training</span><small>Geführte Übungen</small></div>
+<div class="mini" onclick="show('simulation')"><b>🥽</b><span>Simulation</span><small>Tauchszenarien</small></div>
+<div class="mini" onclick="show('log')"><b>📖</b><span>Logbuch</span><small>RMV & Tauchgänge</small></div>
+<div class="mini" onclick="show('progress')"><b>▥</b><span>Fortschritt</span><small>Entwicklung</small></div></div>
+<button class="btn mega" onclick="show('training')">LOS GEHT’S →<small>DEINE ATEMREISE BEGINNT HIER</small></button>
+<div class="grid"><div class="card">Ø RMV<div id="avg" class="value">–</div><span class="muted">l/min</span></div>
+<div class="card">Tauchgänge<div id="divesN" class="value">0</div><span class="muted">gespeichert</span></div></div>
+<div class="card safety"><b>⚠️ Sicherheit</b><p>Übungen nur an Land durchführen. Beim Gerätetauchen niemals die Luft anhalten. DiveBreath ersetzt keine Tauchausbildung, Tauchplanung oder einen Tauchcomputer.</p></div>
+</section>
+
+<section id="training" class="view"><div class="sectionTitle">Atemtraining</div>
+<div class="card"><div class="eyebrow">SCHRITT 1</div><h2>Wie lange möchtest du trainieren?</h2>
+<div class="chips" id="durationChips"><button onclick="pickDuration(3,this)">3 min</button><button class="sel" onclick="pickDuration(5,this)">5 min</button><button onclick="pickDuration(10,this)">10 min</button><button onclick="pickDuration(15,this)">15 min</button></div>
+<label>Eigene Dauer (1–30 min)</label><input id="customDuration" type="number" min="1" max="30" placeholder="z. B. 8" oninput="customDur()"></div>
+<div class="sectionTitle">Wähle dein Programm</div>
+<div class="program" onclick="selectProgram('calm')"><div class="ico">🌊</div><div class="grow"><b>Ruhiger Grundrhythmus</b><small>Gleichmäßig · 4 s ein / 5 s aus</small></div>›</div>
+<div class="program" onclick="selectProgram('recovery')"><div class="ico">💙</div><div class="grow"><b>Nach Belastung beruhigen</b><small>Beginnt kürzer und wird schrittweise ruhiger</small></div>›</div>
+<div class="program" onclick="selectProgram('control')"><div class="ico">🫁</div><div class="grow"><b>Atemkontrolle</b><small>Bewusst gleichmäßig · 4 s ein / 6 s aus</small></div>›</div>
+<div class="program" onclick="selectProgram('buoyancy')"><div class="ico">⚖️</div><div class="grow"><b>Tarierung & Atmung</b><small>Atmung mit mentalen Tarierhinweisen</small></div>›</div>
+<div class="program" onclick="selectProgram('predive')"><div class="ico">🌙</div><div class="grow"><b>Vor dem Tauchgang</b><small>Ruhiger Fokus vor dem Einstieg</small></div>›</div>
+<p class="muted fine">Die Sekundenwerte sind Trainingsrhythmen für Übungen an Land, keine vorgeschriebene Atemfrequenz unter Wasser.</p>
+</section>
+
+<section id="coach" class="view"><div class="coachTop"><div><div class="eyebrow">LIVE COACH</div><h2 id="coachTitle">Ruhiger Grundrhythmus</h2></div><div id="totalTime" class="timer">05:00</div></div>
+<div class="lungStage">
+<svg id="lungs" viewBox="0 0 300 260" aria-label="Animierte Lunge">
+<path class="trachea" d="M150 25v75M150 75l-32 30M150 75l32 30"/>
+<path class="lung left" d="M137 91C105 80 68 104 51 144c-18 43-8 83 18 91 27 8 61-15 72-51 9-31 3-65-4-93z"/>
+<path class="lung right" d="M163 91c32-11 69 13 86 53 18 43 8 83-18 91-27 8-61-15-72-51-9-31-3-65 4-93z"/>
+</svg>
+<div id="phaseName" class="phaseName">Einatmen</div><div id="phaseCount" class="phaseCount">4.0</div><div class="phaseUnit">Sekunden</div></div>
+<div class="progressTrack"><div id="phaseBar"></div></div>
+<div class="card cue"><b id="coachCue">Ruhig und entspannt einatmen.</b><p id="coachExtra">Schultern locker. Nicht maximal einatmen.</p></div>
+<div class="controls"><button id="pauseBtn" class="btn secondary" onclick="togglePause()">Ⅱ PAUSE</button><button class="btn danger" onclick="stopTraining()">■ BEENDEN</button></div>
+</section>
+
+<section id="summary" class="view"><div class="sectionTitle">Training abgeschlossen</div><div class="hero compact"><div class="eyebrow">GUT GEMACHT</div><h1 id="sumTitle">5 Minuten</h1><p class="muted">Du hast deine Atemkontrolle trainiert.</p></div>
+<div class="grid"><div class="card">Atemzyklen<div id="sumCycles" class="value">0</div></div><div class="card">Dauer<div id="sumTime" class="value">0:00</div></div></div>
+<div class="card"><b>Wie ruhig fühlst du dich jetzt?</b><div class="rating"><button onclick="rate(1)">1</button><button onclick="rate(2)">2</button><button onclick="rate(3)">3</button><button onclick="rate(4)">4</button><button onclick="rate(5)">5</button></div><small class="muted">1 = unruhig · 5 = sehr ruhig</small></div>
+<button class="btn" onclick="show('training')">WEITERES TRAINING</button></section>
+
+<section id="simulation" class="view"><div class="sectionTitle">Mentale Tauchsimulation</div>
+<div class="scenario"><div class="eyebrow">SZENARIO · KEIN ERSATZ FÜR AUSBILDUNG</div><div class="depth">15 m</div><div id="simTime" class="timer">00:00</div><span class="bubble b1"></span><span class="bubble b2"></span><h2 id="sceneTitle">Ruhiges Schweben</h2><p id="sceneText">Stelle dir neutrale Tarierung und eine entspannte, kontinuierliche Atmung vor.</p></div>
+<div class="program" onclick="startSim('calm')"><div class="ico">🤿</div><div class="grow"><b>Ruhiges Schweben</b><small>Entspannung & Tarierung</small></div></div>
+<div class="program" onclick="startSim('current')"><div class="ico">🌊</div><div class="grow"><b>Leichte Strömung</b><small>Belastung erkennen, Tempo reduzieren</small></div></div>
+<div class="program" onclick="startSim('mask')"><div class="ico">🥽</div><div class="grow"><b>Maske läuft voll</b><small>Aufgabe ruhig abarbeiten und weiteratmen</small></div></div>
+<div class="program" onclick="startSim('recovery')"><div class="ico">💙</div><div class="grow"><b>Nach Belastung</b><small>Stabilisieren und normale Atmung finden</small></div></div></section>
+
+<section id="log" class="view"><div class="sectionTitle">Tauchlogbuch</div><div id="logList"></div><button class="btn" onclick="show('newDive')">＋ TAUCHGANG EINTRAGEN</button></section>
+<section id="newDive" class="view"><div class="sectionTitle">Tauchgang eintragen</div><div class="card"><label>Datum</label><input id="date" type="date">
+<div class="row"><div><label>Flasche (Liter)</label><input id="tank" type="number" value="12" step=".1"></div><div><label>Ø Tiefe (m)</label><input id="depth" type="number" value="12" step=".1"></div></div>
+<div class="row"><div><label>Startdruck (bar)</label><input id="startp" type="number" value="200"></div><div><label>Enddruck (bar)</label><input id="endp" type="number" value="60"></div></div>
+<div class="row"><div><label>Tauchzeit (min)</label><input id="minutes" type="number" value="43"></div><div><label>Wasser °C</label><input id="temp" type="number" value="18"></div></div>
+<button class="btn" onclick="saveDive()">RMV BERECHNEN & SPEICHERN</button><div id="calc" class="result muted">RMV = verbrauchtes Flaschengas ÷ Zeit ÷ Umgebungsdruck.</div></div></section>
+
+<section id="progress" class="view"><div class="sectionTitle">Dein Fortschritt</div><div class="grid"><div class="card">Tauchgänge<div id="pDives" class="value">0</div></div><div class="card">Trainings<div id="pTrain" class="value">0</div></div></div>
+<div class="card"><b>RMV-Entwicklung · letzte 10</b><div id="chart" class="chart"></div></div><div class="card stats"><b>Trainingszeit gesamt</b><div id="trainMinutes" class="value">0 min</div><span class="muted">lokal auf diesem Gerät gespeichert</span></div></section>
+
+<section id="settings" class="view"><div class="sectionTitle">Einstellungen</div><div class="card">
+<div class="setting"><span>Vibration beim Phasenwechsel</span><div id="vib" class="switch" onclick="toggleVib()"></div></div>
+<div class="setting"><span>Datenspeicherung</span><b>Lokal</b></div></div>
+<button class="btn secondary" onclick="exportData()">Backup exportieren</button><button class="btn secondary" onclick="clearData()">Lokale Daten löschen</button></section>
+</main></div>
+<nav><div class="navin"><button class="on" data-v="home" onclick="show('home')"><i>⌂</i>Start</button><button data-v="training" onclick="show('training')"><i>🫁</i>Training</button><button data-v="simulation" onclick="show('simulation')"><i>◉</i>Simulation</button><button data-v="log" onclick="show('log')"><i>🤿</i>Logbuch</button><button data-v="progress" onclick="show('progress')"><i>▥</i>Fortschritt</button></div></nav>
+<script src="./app.js"></script></body></html>

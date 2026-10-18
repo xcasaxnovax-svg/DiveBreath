@@ -1,7 +1,7 @@
 {
   "name": "DiveBreath",
   "short_name": "DiveBreath",
-  "description": "Breathing coach, dive simulator and gas-consumption log for recreational scuba divers.",
+  "description": "Atemtraining, mentale Tauchszenarien und RMV-Logbuch für Sporttaucher.",
   "id": "/DiveBreath/",
   "start_url": "/DiveBreath/",
   "scope": "/DiveBreath/",
