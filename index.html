@@ -1,26 +1,17 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#00131d"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css?v=9"><title>DiveBreath V9</title></head><body>
-<section id="welcome" class="welcome">
- <img src="./welcome-v9.jpg" alt="" class="welcomeBg"><div class="shade"></div>
- <div class="welcomeUI"><div class="brand">Dive<span>Breath</span></div><p>Ruhiger atmen. Bewusster tauchen.</p><button id="enter" class="cta">LOS GEHT’S →</button><div class="safety">⚠️ Nur an Land trainieren. Beim Gerätetauchen niemals die Luft anhalten. DiveBreath ersetzt keine Tauchausbildung, Tauchplanung oder einen Tauchcomputer.</div></div>
-</section>
-<div id="app" class="hidden"><header><button id="back">‹</button><b id="title">Training</b><span>1.0 V9</span></header><main>
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#00131d"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css?v=10"><title>DiveBreath</title></head><body>
+<section id="welcome" class="welcome"><img src="./welcome-v9.jpg" class="welcomeBg"><div class="shade"></div><div class="version homeVersion">1.0 V10</div><div class="welcomeUI"><div class="brand">Dive<span>Breath</span></div><p>Ruhiger atmen. Bewusster tauchen.</p><button id="enter" class="cta">LOS GEHT’S →</button><div class="safety">⚠️ Nur an Land trainieren. Beim Gerätetauchen niemals die Luft anhalten. DiveBreath ersetzt keine Tauchausbildung, Tauchplanung oder einen Tauchcomputer.</div></div></section>
+<div id="app" class="hidden"><header><button id="back">‹</button><b id="title">Training</b><span class="version">1.0 V10</span></header><main>
 <section id="training" class="page active">
- <div class="presets"><button class="sel" data-i="4" data-o="5">Klassisch<small>4s / 5s</small></button><button data-i="5" data-o="7">Ruhig<small>5s / 7s</small></button><button data-i="6" data-o="8">Entspannt<small>6s / 8s</small></button><button id="custom">Individuell<small>anpassen</small></button></div>
- <div class="lungsWrap"><div class="lungPair" id="lungPair"><img src="./lungs-v9.png" alt="Lunge"></div><b id="phase">BEREIT</b></div>
- <div class="ring"><strong id="phaseTime">0.0</strong><small>Sekunden</small></div>
- <div class="bar"><i id="bar"></i></div>
- <div class="stats"><span>Gesamtzeit<b id="elapsed">00:00</b></span><span>Zyklen<b id="cycles">0</b></span><span>Zielzeit<b id="target">10:00</b></span></div>
- <div class="controls"><button id="start">▶<small>Start</small></button><button id="pause">Ⅱ<small>Pause</small></button><button id="stop">■<small>Stopp</small></button><button id="reset">↻<small>Zurücksetzen</small></button></div>
-</section>
-<section id="check" class="page">
- <div class="durations"><button class="sel" data-min="3">3 Minuten</button><button data-min="5">5 Minuten</button><button data-min="10">10 Minuten</button></div>
- <div class="tapWrap"><button id="tap"><b id="tapText">EINATMEN</b><small>Jetzt drücken</small></button></div>
- <div class="stats"><span>Zeit<b id="checkTime">00:00</b></span><span>Atemzüge<b id="checkCycles">0</b></span><span>Phase<b id="checkPhase">Bereit</b></span></div>
- <div class="panel"><h3>Aktuelle Werte (Live)</h3><div class="stats"><span>Ø Einatmung<b id="avgIn">–</b></span><span>Ø Ausatmung<b id="avgOut">–</b></span><span>Frequenz<b id="freq">–</b></span></div><canvas id="live" width="600" height="190"></canvas></div>
- <button id="finish" class="secondary">ATEM-CHECK BEENDEN</button>
-</section>
-<section id="result" class="page"><div class="done">✓</div><h2>Atem-Check abgeschlossen!</h2><p id="intro"></p><div class="panel results"><p>Atemfrequenz <b id="rFreq"></b></p><p>Ø Einatemzeit <b id="rIn"></b></p><p>Ø Ausatemzeit <b id="rOut"></b></p><p>Verhältnis Ein/Aus <b id="rRatio"></b></p><p>Rhythmus-Stabilität <b id="rStable"></b></p></div><div class="panel"><canvas id="resultChart" width="600" height="240"></canvas></div><div class="tip">💡 <b>Tipp</b><p id="tip"></p></div></section>
-<section id="log" class="page"><h2>Logbuch</h2><div class="panel">RMV-/Tauchgangsprotokoll bleibt lokal auf deinem Gerät gespeichert.</div></section>
-<section id="progress" class="page"><h2>Fortschritt</h2><div class="panel"><div class="stats"><span>Atem-Checks<b id="pChecks">0</b></span><span>Ø Frequenz<b id="pFreq">–</b></span><span>Trainings<b id="pTrain">0</b></span></div><div id="history"></div></div></section>
-</main><nav><button class="sel" data-p="training">🫁<small>Training</small></button><button data-p="check">≋<small>Atem-Check</small></button><button data-p="log">📖<small>Logbuch</small></button><button data-p="progress">▥<small>Fortschritt</small></button></nav></div>
-<script src="./app.js?v=9"></script></body></html>
+<div class="presets"><button class="sel" data-i="4" data-o="5">Klassisch<small>4s / 5s</small></button><button data-i="5" data-o="7">Ruhig<small>5s / 7s</small></button><button data-i="6" data-o="8">Entspannt<small>6s / 8s</small></button><button id="custom">Individuell<small>✎ anpassen</small></button></div>
+<div class="lungStage"><div id="lung"><img src="./lungs-airflow.svg"></div><b id="phase">BEREIT</b></div>
+<div class="ring" id="ring"><strong id="phaseTime">0.0</strong><small>Sekunden</small></div><div class="bar"><i id="bar"></i></div>
+<div class="stats"><span>Gesamtzeit<b id="elapsed">00:00</b></span><span>Zyklen<b id="cycles">0</b></span><span>Zielzeit<b id="target">10:00</b></span></div>
+<div class="controls"><button id="start">▶<small>Start</small></button><button id="pause">Ⅱ<small>Pause</small></button><button id="stop">■<small>Stopp</small></button><button id="reset">↻<small>Reset</small></button></div></section>
+<section id="customPage" class="page"><h2>Individuell</h2><div class="customLung"><img src="./lungs-airflow.svg"></div><div class="panel"><h3>Atemzeiten festlegen</h3><p>Stelle deine persönlichen Atemzeiten und die Trainingsdauer ein.</p>
+<div class="step"><span>Einatemzeit</span><button data-key="in" data-d="-1">−</button><b id="ci">4</b><small>Sek.</small><button data-key="in" data-d="1">＋</button></div>
+<div class="step"><span>Ausatemzeit</span><button data-key="out" data-d="-1">−</button><b id="co">5</b><small>Sek.</small><button data-key="out" data-d="1">＋</button></div>
+<div class="step"><span>Trainingsdauer</span><button data-key="dur" data-d="-1">−</button><b id="cd">10</b><small>Min.</small><button data-key="dur" data-d="1">＋</button></div></div><button id="applyCustom" class="cta inline">ÜBERNEHMEN</button></section>
+<section id="check" class="page"><h2>Atem-Check</h2><div class="tapWrap"><button id="tap"><b id="tapText">EINATMEN</b><small>Jetzt drücken</small></button></div><div class="stats"><span>Zeit<b id="checkTime">00:00</b></span><span>Atemzüge<b id="checkCycles">0</b></span><span>Phase<b id="checkPhase">Bereit</b></span></div><button id="finish" class="secondary">ATEM-CHECK BEENDEN</button></section>
+<section id="log" class="page"><h2>Logbuch</h2><div class="panel">Deine Tauchgänge und RMV-Werte bleiben lokal auf diesem Gerät gespeichert.</div></section>
+<section id="progress" class="page"><h2>Fortschritt</h2><div class="panel">Deine Trainings- und Atem-Check-Werte werden lokal gespeichert.</div></section>
+</main><nav><button class="sel" data-p="training">🫁<small>Training</small></button><button data-p="check">≋<small>Atem-Check</small></button><button data-p="log">📖<small>Logbuch</small></button><button data-p="progress">▥<small>Fortschritt</small></button></nav></div><script src="./app.js?v=10"></script></body></html>
