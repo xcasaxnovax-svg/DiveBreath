@@ -1,2 +1,2 @@
-# DiveBreath V13 Atem-Check
-V12 Training/Lunge unverändert. Neu: zeitgesteuerter Atem-Check mit 1/3/5/10/individuell, Pause/Beenden, Atemphasen-Tapping, Ergebnisanalyse, Trend, Lob und konkrete Tipps. Titel ergänzt um App-Name und Claim.
+# DiveBreath V14 DIVER CHECK
+Training and lung from V12 unchanged. Atem-Check rebuilt with working start, countdown + stopwatch, diver scene, subtle gaze animation, bubbles on exhale, pause/end and result feedback.
