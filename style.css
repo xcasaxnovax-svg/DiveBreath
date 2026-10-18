@@ -9,3 +9,18 @@
 .lungStage.inhale .airMotion{opacity:.95;color:#23e9ff;filter:drop-shadow(0 0 8px #23e9ff)}
 .lungStage.exhale .airMotion{opacity:.95;color:#ff6b49;filter:hue-rotate(145deg) saturate(2.2) drop-shadow(0 0 8px #ff6b49);transform:rotate(180deg)}
 .homeVersion{z-index:30!important;color:#fff!important;font-weight:800;text-shadow:0 2px 7px #001}
+
+.claim{font-size:15px!important;line-height:1.45;max-width:420px;text-shadow:0 2px 7px #001}
+.checkLead{color:#b9d5db;text-align:center;line-height:1.45;font-size:13px}
+.durations{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:12px 0}
+.durations button{padding:12px 4px;border:1px solid #155b70;border-radius:11px;background:#052633;color:#d8edf2}
+.durations .sel{border-color:#19e2f6;box-shadow:0 0 14px #19e2f644}
+.customDuration{display:grid;grid-template-columns:1fr 44px 42px 42px 44px;align-items:center;background:#052532;border-radius:13px;padding:10px 12px}
+.customDuration button{width:38px;height:38px;border-radius:50%;border:1px solid #1bdff3;background:#062d3a;color:#21e6f7;font-size:23px}
+.checkClock{text-align:center;margin:10px 0}.checkClock small{display:block;color:#8eb7c0}.checkClock b{font-size:42px;color:#25e5f6}
+.checkControls{display:grid;grid-template-columns:1fr 1fr;gap:14px}.checkControls button{padding:14px;border:1px solid #176b82;border-radius:14px;background:#062b38;color:white}.checkControls small{font-size:11px}
+.resultBadge{width:58px;height:58px;border-radius:50%;margin:8px auto;display:grid;place-items:center;background:#23d55a;font-size:34px;font-weight:900}
+#resultPraise{text-align:center;color:#d8f7fb;line-height:1.45}
+.resultGrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;padding:0;overflow:hidden}.resultGrid span{padding:13px;background:#062b38;color:#9fc4cc;font-size:12px}.resultGrid b{display:block;color:white;font-size:20px;margin-top:4px}
+.feedback{border-radius:14px;padding:15px;margin:14px 0;background:#073247;border:1px solid #16677c;line-height:1.5}.feedback strong{color:#2ce7f7}.feedback.good{border-color:#27c77a}.feedback.warn{border-color:#e3a83b}
+#checkChart{width:100%;height:auto;background:#031c26;border-radius:9px}
