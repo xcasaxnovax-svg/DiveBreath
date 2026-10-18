@@ -1,32 +1,23 @@
 {
   "name": "DiveBreath",
   "short_name": "DiveBreath",
-  "description": "Atemtraining, mentale Tauchszenarien und RMV-Logbuch für Sporttaucher.",
   "id": "/DiveBreath/",
   "start_url": "/DiveBreath/",
   "scope": "/DiveBreath/",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#02141e",
-  "theme_color": "#02141e",
+  "background_color": "#00141d",
+  "theme_color": "#00141d",
+  "description": "Atemtraining und Atem-Check für Sporttaucher.",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "type": "image/png"
     }
   ]
 }
