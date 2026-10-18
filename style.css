@@ -30,3 +30,15 @@ dialog{border:1px solid #15708b;border-radius:24px;background:#052633;color:whit
 .phaseName{font-size:26px;font-weight:900;margin-top:-8px}.phaseCount{font-size:58px;font-weight:950;color:#35def5;line-height:1}.phaseUnit{color:#9bc1cb;font-size:12px}.progressTrack{height:8px;background:#073244;border-radius:99px;overflow:hidden;margin:5px 0 14px}.progressTrack div{height:100%;width:100%;background:#35def5;border-radius:99px}
 .cue{text-align:center}.cue p{margin-bottom:0}.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}.danger{background:#3b1f29!important;color:#ffdbe4!important;border:1px solid #91485e!important;box-shadow:none!important}.compact{min-height:auto}.rating{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:14px 0}.rating button{font-size:20px}.stats{margin-top:14px}
 @media(max-width:430px){.splash{height:470px}.splashLogo{font-size:45px}.lungStage{min-height:360px}}
+
+.titleArtwork{margin:-8px -18px 14px;background:#00121b;border-radius:0 0 30px 30px;overflow:hidden;border-bottom:1px solid #0d5369}
+.titleArtwork img{display:block;width:100%;height:auto}
+button.program.choose{width:100%;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+button.program.choose>span{font-size:24px;color:#5d8994}
+button.program.choose.selectedProgram{border-color:#35def5;background:linear-gradient(145deg,#073b4d,#063140);box-shadow:0 0 0 1px #35def544,0 8px 25px #00ccea12}
+button.program.choose.selectedProgram>span{color:#35def5}
+.choiceStatus{margin-top:12px;padding:10px 12px;border-radius:12px;background:#041f2b;color:#a9d1da;font-size:13px}
+.choiceStatus b{color:#35def5}
+.startDock{margin-top:16px;padding:14px;border-radius:22px;background:#031d29;border:1px solid #0d5369}
+.chips button{cursor:pointer;touch-action:manipulation;min-height:48px;font-size:15px}
+#startTrainingBtn{touch-action:manipulation;min-height:64px}

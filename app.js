@@ -31,3 +31,47 @@ function exportData(){let data={version:3,exported:new Date().toISOString(),dive
 function clearData(){if(confirm('Alle lokal gespeicherten Tauchgänge und Trainingsdaten löschen?')){localStorage.clear();dash();show('home')}}
 function toggleVib(){store.set('vibrate',!store.get('vibrate',true));$('vib').style.opacity=store.get('vibrate',true)?1:.35}
 addEventListener('load',()=>{$('date').value=new Date().toISOString().slice(0,10);dash();$('vib').style.opacity=store.get('vibrate',true)?1:.35;if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js')});
+
+let selectedProgramKey='calm';
+function updateTrainingSelection(){
+  const mins=selectedDuration;
+  const p=programs[selectedProgramKey];
+  const ds=document.getElementById('durationStatus');
+  const ps=document.getElementById('programStatus');
+  const sb=document.querySelector('#startTrainingBtn small');
+  if(ds) ds.innerHTML=`Ausgewählt: <b>${mins} ${mins===1?'Minute':'Minuten'}</b>`;
+  if(ps) ps.innerHTML=`Programm: <b>${p.name}</b>`;
+  if(sb) sb.textContent=`${mins} ${mins===1?'MINUTE':'MINUTEN'} · ${p.name.toUpperCase()}`;
+}
+function bindTrainingControls(){
+  document.querySelectorAll('#durationChips button').forEach(btn=>{
+    btn.onclick=()=>{
+      selectedDuration=Number(btn.dataset.min);
+      document.querySelectorAll('#durationChips button').forEach(x=>x.classList.toggle('sel',x===btn));
+      const c=document.getElementById('customDuration'); if(c)c.value='';
+      updateTrainingSelection();
+    };
+  });
+  const custom=document.getElementById('customDuration');
+  if(custom) custom.oninput=()=>{
+    if(custom.value!==''){
+      selectedDuration=Math.max(1,Math.min(30,Number(custom.value)||1));
+      document.querySelectorAll('#durationChips button').forEach(x=>x.classList.remove('sel'));
+      updateTrainingSelection();
+    }
+  };
+  document.querySelectorAll('#programList .choose').forEach(btn=>{
+    btn.onclick=()=>{
+      selectedProgramKey=btn.dataset.program;
+      document.querySelectorAll('#programList .choose').forEach(x=>{
+        const on=x===btn;x.classList.toggle('selectedProgram',on);
+        const mark=x.querySelector(':scope > span');if(mark)mark.textContent=on?'✓':'○';
+      });
+      updateTrainingSelection();
+    };
+  });
+  const start=document.getElementById('startTrainingBtn');
+  if(start) start.onclick=()=>startTraining(selectedProgramKey);
+  updateTrainingSelection();
+}
+document.addEventListener('DOMContentLoaded',bindTrainingControls);

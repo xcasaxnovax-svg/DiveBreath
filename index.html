@@ -1,13 +1,11 @@
 <!doctype html><html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#02141e"><link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icon-192.png"><link rel="stylesheet" href="./style.css"><title>DiveBreath</title></head>
-<body><div class="app"><header class="top"><div class="brand">◢ Dive<span>Breath</span></div><div class="badge">1.0 RC3</div></header><main>
+<link rel="icon" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=rc4"><title>DiveBreath</title></head>
+<body><div class="app"><header class="top"><div class="brand">◢ Dive<span>Breath</span></div><div class="badge">1.0 RC4</div></header><main>
 
 <section id="home" class="view active">
-<div class="splash"><div class="splashShade"></div><div class="splashContent">
-<div class="splashLogo">Dive<span>Breath</span></div><div class="splashSub">RUHIGER ATMEN · BEWUSSTER TAUCHEN</div>
-<div class="splashClaim">BESSERE ATEMKONTROLLE.<br>MEHR RUHE UNTER WASSER.</div></div></div>
+<div class="titleArtwork"><img src="./hero.png?v=rc4" alt="DiveBreath – Ruhiger atmen, bewusster tauchen"></div>
 <div class="featureGrid">
 <div class="mini" onclick="show('training')"><b>🫁</b><span>Training</span><small>Geführte Übungen</small></div>
 <div class="mini" onclick="show('simulation')"><b>🥽</b><span>Simulation</span><small>Tauchszenarien</small></div>
@@ -20,18 +18,27 @@
 </section>
 
 <section id="training" class="view"><div class="sectionTitle">Atemtraining</div>
-<div class="card"><div class="eyebrow">SCHRITT 1</div><h2>Wie lange möchtest du trainieren?</h2>
-<div class="chips" id="durationChips"><button onclick="pickDuration(3,this)">3 min</button><button class="sel" onclick="pickDuration(5,this)">5 min</button><button onclick="pickDuration(10,this)">10 min</button><button onclick="pickDuration(15,this)">15 min</button></div>
-<label>Eigene Dauer (1–30 min)</label><input id="customDuration" type="number" min="1" max="30" placeholder="z. B. 8" oninput="customDur()"></div>
-<div class="sectionTitle">Wähle dein Programm</div>
-<div class="program" onclick="selectProgram('calm')"><div class="ico">🌊</div><div class="grow"><b>Ruhiger Grundrhythmus</b><small>Gleichmäßig · 4 s ein / 5 s aus</small></div>›</div>
-<div class="program" onclick="selectProgram('recovery')"><div class="ico">💙</div><div class="grow"><b>Nach Belastung beruhigen</b><small>Beginnt kürzer und wird schrittweise ruhiger</small></div>›</div>
-<div class="program" onclick="selectProgram('control')"><div class="ico">🫁</div><div class="grow"><b>Atemkontrolle</b><small>Bewusst gleichmäßig · 4 s ein / 6 s aus</small></div>›</div>
-<div class="program" onclick="selectProgram('buoyancy')"><div class="ico">⚖️</div><div class="grow"><b>Tarierung & Atmung</b><small>Atmung mit mentalen Tarierhinweisen</small></div>›</div>
-<div class="program" onclick="selectProgram('predive')"><div class="ico">🌙</div><div class="grow"><b>Vor dem Tauchgang</b><small>Ruhiger Fokus vor dem Einstieg</small></div>›</div>
-<p class="muted fine">Die Sekundenwerte sind Trainingsrhythmen für Übungen an Land, keine vorgeschriebene Atemfrequenz unter Wasser.</p>
-</section>
+<div class="card"><div class="eyebrow">1 · TRAININGSDAUER</div><h2>Wie lange möchtest du trainieren?</h2>
+<div class="chips" id="durationChips">
+<button type="button" data-min="3">3 min</button><button type="button" class="sel" data-min="5">5 min</button>
+<button type="button" data-min="10">10 min</button><button type="button" data-min="15">15 min</button>
+</div>
+<label for="customDuration">Oder eigene Dauer (1–30 Minuten)</label>
+<input id="customDuration" type="number" inputmode="numeric" min="1" max="30" placeholder="Optional – z. B. 8">
+<div id="durationStatus" class="choiceStatus">Ausgewählt: <b>5 Minuten</b></div></div>
 
+<div class="sectionTitle">2 · Trainingsart wählen</div>
+<div id="programList">
+<button type="button" class="program choose selectedProgram" data-program="calm"><div class="ico">🌊</div><div class="grow"><b>Ruhiger Grundrhythmus</b><small>4 s ein · 5 s aus</small></div><span>✓</span></button>
+<button type="button" class="program choose" data-program="recovery"><div class="ico">💙</div><div class="grow"><b>Nach Belastung beruhigen</b><small>3/4 → 4/5 → 4/6 Sekunden</small></div><span>○</span></button>
+<button type="button" class="program choose" data-program="control"><div class="ico">🫁</div><div class="grow"><b>Atemkontrolle</b><small>4 s ein · 6 s aus</small></div><span>○</span></button>
+<button type="button" class="program choose" data-program="buoyancy"><div class="ico">⚖️</div><div class="grow"><b>Tarierung & Atmung</b><small>4 s ein · 5 s aus + Tarierhinweise</small></div><span>○</span></button>
+<button type="button" class="program choose" data-program="predive"><div class="ico">🌙</div><div class="grow"><b>Vor dem Tauchgang</b><small>4 s ein · 6 s aus + Fokus</small></div><span>○</span></button>
+</div>
+<div class="startDock"><div id="programStatus" class="choiceStatus">Programm: <b>Ruhiger Grundrhythmus</b></div>
+<button id="startTrainingBtn" type="button" class="btn mega">TRAINING STARTEN →<small>5 MINUTEN · RUHIGER GRUNDRHYTHMUS</small></button></div>
+<p class="muted fine">Nur an Land trainieren. Beim Gerätetauchen niemals die Luft anhalten.</p>
+</section>
 <section id="coach" class="view"><div class="coachTop"><div><div class="eyebrow">LIVE COACH</div><h2 id="coachTitle">Ruhiger Grundrhythmus</h2></div><div id="totalTime" class="timer">05:00</div></div>
 <div class="lungStage">
 <svg id="lungs" viewBox="0 0 300 260" aria-label="Animierte Lunge">
@@ -73,4 +80,4 @@
 <button class="btn secondary" onclick="exportData()">Backup exportieren</button><button class="btn secondary" onclick="clearData()">Lokale Daten löschen</button></section>
 </main></div>
 <nav><div class="navin"><button class="on" data-v="home" onclick="show('home')"><i>⌂</i>Start</button><button data-v="training" onclick="show('training')"><i>🫁</i>Training</button><button data-v="simulation" onclick="show('simulation')"><i>◉</i>Simulation</button><button data-v="log" onclick="show('log')"><i>🤿</i>Logbuch</button><button data-v="progress" onclick="show('progress')"><i>▥</i>Fortschritt</button></div></nav>
-<script src="./app.js"></script></body></html>
+<script src="./app.js?v=rc4"></script></body></html>

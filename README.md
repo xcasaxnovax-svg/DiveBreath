@@ -1,2 +1,2 @@
-# DiveBreath 1.0 RC3
-Private multi-day test build. Includes animated lungs, selectable training duration, per-phase countdown, pause/resume/stop, distinct training programs, simulation, RMV logbook, progress and local backup.
+# DiveBreath 1.0 RC4 FIXED
+Fixes: full title artwork shown, duration buttons work without custom input, program selection is explicit, and training starts from a dedicated start button.
