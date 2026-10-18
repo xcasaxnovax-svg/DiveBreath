@@ -1,2 +1,2 @@
-# DiveBreath V8 Visual Build
-Built from the approved four-screen visual direction. Includes the approved lung image and new DiveBreath app icon.
+# DiveBreath V9
+Clean no-scroll welcome, V7-style training, realistic lung visual, explicit Start/Pause/Stop/Reset, reset on page changes, interactive Atem-Check, approved icon.

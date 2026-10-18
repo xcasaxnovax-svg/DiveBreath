@@ -5,9 +5,8 @@
   "start_url": "/DiveBreath/",
   "scope": "/DiveBreath/",
   "display": "standalone",
-  "background_color": "#00141d",
-  "theme_color": "#00141d",
-  "description": "Atemtraining und Atem-Check für Sporttaucher.",
+  "background_color": "#00131d",
+  "theme_color": "#00131d",
   "icons": [
     {
       "src": "icon-192.png",
